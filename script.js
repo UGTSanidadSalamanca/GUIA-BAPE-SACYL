@@ -1,13 +1,16 @@
 // Destructuring globals provided by CDNs
 const { useState, useEffect, useCallback } = React;
 const { HashRouter, Routes, Route, Navigate, useLocation, NavLink } = ReactRouterDOM;
+
+// Safe access to Lucide icons global (it can be window.lucide or window.LucideReact depending on version)
+const LucideIcons = window.lucide || window.LucideReact || {};
 const { 
   Building2, LogIn, Calculator, PhoneIncoming, AlertTriangle, 
   Trash2, Save, MapPin, Mail, Phone, ArrowUp, Info, 
   CheckCircle, Globe, MousePointer, Hammer, Award, BookOpen, 
   GraduationCap, Clock, Calendar, Briefcase, Map, AlertCircle, 
   PhoneMissed, Heart, Baby, UserMinus 
-} = LucideReact;
+} = LucideIcons;
 
 // --- Components ---
 
@@ -55,7 +58,7 @@ const Navigation = () => {
                 }`
               }
             >
-              <item.icon className="w-4 h-4" />
+              {item.icon && <item.icon className="w-4 h-4" />}
               <span>{item.label}</span>
             </NavLink>
           </li>
