@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guía BAPE SACYL | UGT Sanidad Salamanca</title>
     <meta name="description" content="Guía Rápida BAPE SACYL - Información sobre inscripción, baremo de méritos y llamamientos" />
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      /* Smooth scrolling for the whole page */
-      html {
-        scroll-behavior: smooth;
-      }
-      /* Custom scrollbar for webkit */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #C8102E; /* UGT Official Red */
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #9b0c23;
-      }
-    </style>
-  <script type="importmap">
+    
+    <!-- Estilos Personalizados -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- React Router -->
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.production.min.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.production.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
+
+    <!-- Babel para traducir JSX en el navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
@@ -40,8 +40,10 @@
 }
 </script>
 </head>
-  <body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-200 selection:text-red-900">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-200 selection:text-red-900">
     <div id="root"></div>
-    <script type="module" src="./index.tsx"></script>
-  </body>
+
+    <!-- Lógica de la App -->
+    <script type="text/babel" src="script.js"></script>
+</body>
 </html>
