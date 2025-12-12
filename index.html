@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guía BAPE SACYL | UGT Sanidad Salamanca</title>
-    <meta name="description" content="Guía Rápida BAPE SACYL - Información sobre inscripción, baremo de méritos y llamamientos" />
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,25 +11,39 @@
     <!-- Estilos Personalizados -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- React & ReactDOM (UMD for static sites) -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- React & ReactDOM (Development versions for better error messages in console) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     
-    <!-- React Router (UMD) -->
+    <!-- React Router -->
     <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
-    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.production.min.js"></script>
-    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
 
-    <!-- Lucide React Icons (UMD) - CORREGIDO: Usar lucide-react para componentes -->
+    <!-- Lucide React Icons -->
     <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
 
-    <!-- Babel for in-browser JSX compilation -->
+    <!-- Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-200 selection:text-red-900">
+<body class="bg-slate-50 text-slate-800">
     <div id="root"></div>
 
-    <!-- Main App Logic -->
-    <script type="text/babel" src="script.js"></script>
+    <!-- Script de carga con manejo de errores -->
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            document.body.innerHTML = `
+                <div style="padding: 20px; color: red; font-family: sans-serif;">
+                    <h1>Error al cargar la aplicación</h1>
+                    <p><strong>Mensaje:</strong> ${message}</p>
+                    <p><strong>Archivo:</strong> ${source}:${lineno}</p>
+                    <p>Por favor, abre la consola del navegador (F12) para más detalles.</p>
+                </div>
+            `;
+        };
+    </script>
+
+    <!-- Main Logic -->
+    <script type="text/babel" data-presets="react,env" src="script.js"></script>
 </body>
 </html>
