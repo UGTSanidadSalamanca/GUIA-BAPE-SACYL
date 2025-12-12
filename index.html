@@ -8,40 +8,26 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Estilos Personalizados -->
+    <!-- Estilos -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- React & ReactDOM (Development versions for better error messages in console) -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- React Dependencies (UMD) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
-    <!-- React Router -->
+    <!-- React Router (UMD) -->
     <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
     <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
     <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
 
-    <!-- Lucide React Icons -->
-    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
+    <!-- Lucide Icons (UMD) -->
+    <script src="https://unpkg.com/lucide-react@0.294.0/dist/umd/lucide-react.min.js"></script>
 
-    <!-- Babel -->
+    <!-- Babel for JSX transformation in browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-200 selection:text-red-900">
     <div id="root"></div>
-
-    <!-- Script de carga con manejo de errores -->
-    <script>
-        window.onerror = function(message, source, lineno, colno, error) {
-            document.body.innerHTML = `
-                <div style="padding: 20px; color: red; font-family: sans-serif;">
-                    <h1>Error al cargar la aplicación</h1>
-                    <p><strong>Mensaje:</strong> ${message}</p>
-                    <p><strong>Archivo:</strong> ${source}:${lineno}</p>
-                    <p>Por favor, abre la consola del navegador (F12) para más detalles.</p>
-                </div>
-            `;
-        };
-    </script>
 
     <!-- Main Logic -->
     <script type="text/babel" data-presets="react,env" src="script.js"></script>
