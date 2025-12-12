@@ -2,8 +2,9 @@
 const { useState, useEffect, useCallback } = React;
 const { HashRouter, Routes, Route, Navigate, useLocation, NavLink } = ReactRouterDOM;
 
-// Safe access to Lucide icons global (it can be window.lucide or window.LucideReact depending on version)
-const LucideIcons = window.lucide || window.LucideReact || {};
+// Safe access to Lucide icons global
+// El CDN de lucide-react expone "window.LucideReact"
+const LucideIcons = window.LucideReact || window.lucide || {};
 const { 
   Building2, LogIn, Calculator, PhoneIncoming, AlertTriangle, 
   Trash2, Save, MapPin, Mail, Phone, ArrowUp, Info, 
