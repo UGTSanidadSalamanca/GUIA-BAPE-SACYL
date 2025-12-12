@@ -3,7 +3,7 @@ import { Building2 } from 'lucide-react';
 
 export const Header: React.FC = () => {
   return (
-    <header className="bg-gradient-to-br from-red-600 to-red-800 text-white py-8 px-4 shadow-lg border-b-4 border-red-900">
+    <header className="bg-[#C8102E] text-white py-8 px-4 shadow-lg border-b-4 border-red-900">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-center md:text-left">
           <div className="flex items-center justify-center md:justify-start gap-3 mb-1">
