@@ -1,35 +1,40 @@
-// Acceso seguro a las librerías globales
+// Acceso seguro a las variables globales (UMD)
 const React = window.React;
 const ReactDOM = window.ReactDOM;
 const ReactRouterDOM = window.ReactRouterDOM;
 
-// Desestructuración
+// Desestructuración de Hooks y Router
 const { useState, useEffect, useCallback } = React;
 const { HashRouter, Routes, Route, Navigate, useLocation, NavLink } = ReactRouterDOM;
 
-// CORRECCIÓN IMPORTANTE:
-// El CDN de lucide-react suele exponerse como "lucideReact" (camelCase), no "LucideReact".
-// Comprobamos varias opciones para asegurar que cargue.
-const LucideLibrary = window.lucideReact || window.LucideReact || window.lucide || {};
+// --- GESTIÓN DE ICONOS (FIX CRITICO) ---
+// Intentamos obtener la librería Lucide del objeto global
+const LucideLibrary = window.lucideReact || window.lucide || {};
 
-// Si la librería no cargó bien, creamos un objeto vacío para que no rompa la página con "undefined"
-// y mostramos un error en consola.
-if (Object.keys(LucideLibrary).length === 0) {
-    console.error("Error crítico: No se ha podido cargar la librería de iconos Lucide.");
-}
-
+// Extraemos los iconos con cuidado.
+// IMPORTANTE: Renombramos 'Map' a 'MapIcon' inmediatamente.
+// Si no lo hacemos, la variable 'Map' sobrescribe el constructor Map() nativo de JS
+// y React explota porque lo necesita internamente.
 const { 
   Building2, LogIn, Calculator, PhoneIncoming, AlertTriangle, 
   Trash2, Save, MapPin, Mail, Phone, ArrowUp, Info, 
   CheckCircle, Globe, MousePointer, Hammer, Award, BookOpen, 
-  GraduationCap, Clock, Calendar, Briefcase, Map, AlertCircle, 
+  GraduationCap, Clock, Calendar, Briefcase, Map: MapIcon, AlertCircle, 
   PhoneMissed, Heart, Baby, UserMinus 
 } = LucideLibrary;
 
-// Componente Fallback para iconos si fallan
-const IconFallback = () => <span className="w-4 h-4 inline-block bg-red-200 rounded-full"></span>;
+// Componente de respaldo por si falla la carga de un icono específico
+const IconFallback = () => <span className="w-4 h-4 inline-block bg-red-200 rounded-full" title="Icono no cargado"></span>;
 
-// --- Components ---
+// Helper para renderizar iconos de forma segura
+const RenderIcon = ({ icon, className }) => {
+  if (!icon) return <IconFallback />;
+  // Lucide en modo UMD a veces devuelve componentes funcionales directos o objetos con render
+  const IconComponent = icon;
+  return <IconComponent className={className} />;
+};
+
+// --- COMPONENTES DE LA INTERFAZ ---
 
 const Header = () => {
   return (
@@ -37,7 +42,7 @@ const Header = () => {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-center md:text-left">
           <div className="flex items-center justify-center md:justify-start gap-3 mb-1">
-            {Building2 ? <Building2 className="w-8 h-8 text-white" /> : <IconFallback />}
+            <RenderIcon icon={Building2} className="w-8 h-8 text-white" />
             <h1 className="text-2xl font-bold tracking-tight">UGT Sanidad Salamanca</h1>
           </div>
           <p className="text-red-100 text-sm font-medium opacity-90">Secretaría Sindical</p>
@@ -75,7 +80,7 @@ const Navigation = () => {
                 }`
               }
             >
-              {item.icon ? <item.icon className="w-4 h-4" /> : <IconFallback />}
+              <RenderIcon icon={item.icon} className="w-4 h-4" />
               <span>{item.label}</span>
             </NavLink>
           </li>
@@ -103,7 +108,7 @@ const Footer = () => {
           <h4 className="text-red-400 font-semibold mb-4">Contacto</h4>
           <div className="space-y-3 text-sm">
             <div className="flex items-start gap-3">
-              {MapPin && <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />}
+              <RenderIcon icon={MapPin} className="w-5 h-5 flex-shrink-0 mt-0.5" />
               <p>Edificio 1 del Hospital Virgen Vega, semisótano.<br/>P.º de San Vicente, 58, 182<br/>37007 Salamanca</p>
             </div>
           </div>
@@ -113,15 +118,15 @@ const Footer = () => {
           <h4 className="text-red-400 font-semibold mb-4">Comunicación</h4>
           <div className="space-y-3 text-sm">
              <div className="flex items-center gap-3">
-              {Mail && <Mail className="w-5 h-5 flex-shrink-0" />}
+              <RenderIcon icon={Mail} className="w-5 h-5 flex-shrink-0" />
               <a href="mailto:sanidad.salamanca@ugt-sp.ugt.org" className="hover:text-white transition-colors">sanidad.salamanca@ugt-sp.ugt.org</a>
             </div>
             <div className="flex items-center gap-3">
-              {Phone && <Phone className="w-5 h-5 flex-shrink-0" />}
+              <RenderIcon icon={Phone} className="w-5 h-5 flex-shrink-0" />
               <span>923 29 11 00 – Ext. 55598</span>
             </div>
             <div className="flex items-center gap-3">
-              {Phone && <Phone className="w-5 h-5 flex-shrink-0" />}
+              <RenderIcon icon={Phone} className="w-5 h-5 flex-shrink-0" />
               <span>Móvil: 637 585 924</span>
             </div>
           </div>
@@ -178,12 +183,12 @@ const ScrollToTopButton = () => {
       className="fixed bottom-8 right-8 bg-[#C8102E] text-white p-3 rounded-full shadow-lg hover:bg-red-700 transition-all transform hover:scale-110 z-40 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
       aria-label="Volver arriba"
     >
-      {ArrowUp ? <ArrowUp className="w-6 h-6" /> : "↑"}
+      <RenderIcon icon={ArrowUp} className="w-6 h-6" />
     </button>
   );
 };
 
-// --- Simulator Logic ---
+// --- SIMULADOR DE PUNTOS ---
 
 const INITIAL_STATE = {
   mesesSNS: 0,
@@ -275,7 +280,7 @@ const Simulator = () => {
     <div className="bg-gradient-to-br from-slate-50 to-red-50 rounded-xl border border-red-100 overflow-hidden shadow-inner my-8">
       <div className="bg-[#C8102E] p-4 flex items-center justify-between">
         <h3 className="text-white font-bold text-lg flex items-center gap-2">
-          {Calculator && <Calculator className="w-5 h-5" />}
+          <RenderIcon icon={Calculator} className="w-5 h-5" />
           Simulador Básico de Puntos
         </h3>
         <span className="text-red-100 text-xs italic">Autobaremo no validado</span>
@@ -304,10 +309,10 @@ const Simulator = () => {
 
         <div className="mt-8 flex gap-4">
           <button onClick={calculate} className="flex-1 bg-[#C8102E] hover:bg-red-700 text-white py-3 px-6 rounded-lg font-bold shadow-md transform active:scale-95 transition-all flex items-center justify-center gap-2">
-            {Save && <Save className="w-5 h-5" />} Calcular Puntuación
+            <RenderIcon icon={Save} className="w-5 h-5" /> Calcular Puntuación
           </button>
           <button onClick={reset} className="bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 px-6 rounded-lg font-semibold shadow-sm transform active:scale-95 transition-all" aria-label="Limpiar">
-            {Trash2 && <Trash2 className="w-5 h-5" />}
+            <RenderIcon icon={Trash2} className="w-5 h-5" />
           </button>
         </div>
 
@@ -330,7 +335,7 @@ const Simulator = () => {
   );
 };
 
-// --- Views ---
+// --- VISTAS ---
 
 const AccessView = () => {
   const steps = [
@@ -351,7 +356,7 @@ const AccessView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-xl font-bold text-red-700 mb-3 flex items-center gap-2">
-          {Globe && <Globe className="w-5 h-5" />} Naturaleza de la Bolsa
+          <RenderIcon icon={Globe} className="w-5 h-5" /> Naturaleza de la Bolsa
         </h3>
         <p className="text-slate-700 leading-relaxed">
           La Bolsa Abierta y Permanente (BAPE) es un <strong>procedimiento telemático</strong> abierto permanentemente. 
@@ -361,7 +366,7 @@ const AccessView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-xl font-bold text-red-700 mb-3 flex items-center gap-2">
-          {CheckCircle && <CheckCircle className="w-5 h-5" />} Requisitos Clave
+          <RenderIcon icon={CheckCircle} className="w-5 h-5" /> Requisitos Clave
         </h3>
         <ul className="list-disc pl-5 space-y-2 text-slate-700">
           <li><strong>Titulación:</strong> Académica requerida para la categoría.</li>
@@ -373,7 +378,7 @@ const AccessView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-xl font-bold text-red-700 mb-6 flex items-center gap-2">
-          {MousePointer && <MousePointer className="w-5 h-5" />} Proceso de Inscripción
+          <RenderIcon icon={MousePointer} className="w-5 h-5" /> Proceso de Inscripción
         </h3>
         <div className="space-y-4">
           {steps.map((step, index) => (
@@ -384,7 +389,7 @@ const AccessView = () => {
               <div>
                 <h4 className={`font-bold ${step.isWarning ? 'text-red-700' : 'text-red-900'}`}>{step.title}</h4>
                 <p className="text-slate-600 text-sm mt-1">{step.desc}</p>
-                {step.isWarning && Hammer && <Hammer className="w-5 h-5 text-red-500 mt-2" />}
+                {step.isWarning && <RenderIcon icon={Hammer} className="w-5 h-5 text-red-500 mt-2" />}
               </div>
             </div>
           ))}
@@ -393,7 +398,7 @@ const AccessView = () => {
 
       <div className="bg-cyan-50 rounded-lg shadow-md p-6 border-l-4 border-cyan-500">
         <h3 className="text-xl font-bold text-cyan-700 mb-3 flex items-center gap-2">
-          {Info && <Info className="w-5 h-5" />} Fecha de Corte
+          <RenderIcon icon={Info} className="w-5 h-5" /> Fecha de Corte
         </h3>
         <p className="mb-2 font-medium">Es una "foto fija" del estado de los aspirantes.</p>
         <ul className="list-disc pl-5 space-y-1 text-slate-700 text-sm">
@@ -423,7 +428,7 @@ const ScoreView = () => {
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600 h-full">
           <h3 className="text-lg font-bold text-red-700 mb-4 flex items-center gap-2">
-            {Award && <Award className="w-5 h-5" />} Experiencia Profesional
+            <RenderIcon icon={Award} className="w-5 h-5" /> Experiencia Profesional
           </h3>
           <table className="w-full text-sm">
             <thead className="bg-[#C8102E] text-white">
@@ -451,7 +456,7 @@ const ScoreView = () => {
 
         <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600 h-full">
           <h3 className="text-lg font-bold text-red-700 mb-4 flex items-center gap-2">
-            {BookOpen && <BookOpen className="w-5 h-5" />} Formación Continuada
+            <RenderIcon icon={BookOpen} className="w-5 h-5" /> Formación Continuada
           </h3>
           <p className="text-xs text-slate-500 mb-3 italic">
             Cursos relacionados y finalizados en los últimos 10 años.
@@ -485,7 +490,7 @@ const ScoreView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-lg font-bold text-red-700 mb-3 flex items-center gap-2">
-          {GraduationCap && <GraduationCap className="w-5 h-5" />} Oposición
+          <RenderIcon icon={GraduationCap} className="w-5 h-5" /> Oposición
         </h3>
         <p className="text-slate-700 mb-2">
           Superación de ejercicios en procesos selectivos de la misma categoría en <strong>cualquier Administración Pública</strong>.
@@ -503,7 +508,7 @@ const ScoreView = () => {
 };
 
 const CallupsView = () => {
-  const AppointmentCard = ({ icon: Icon, title, color, subtitle, features }) => {
+  const AppointmentCard = ({ icon, title, color, subtitle, features }) => {
     const colors = {
       green: { bg: 'bg-green-50', border: 'border-green-500', text: 'text-green-700', badge: 'bg-green-100 text-green-800' },
       cyan: { bg: 'bg-cyan-50', border: 'border-cyan-500', text: 'text-cyan-700', badge: 'bg-cyan-100 text-cyan-800' },
@@ -512,7 +517,7 @@ const CallupsView = () => {
     const c = colors[color];
     return (
       <div className={`bg-white rounded-xl shadow-lg border-t-4 ${c.border} p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1`}>
-        {Icon ? <Icon className={`w-12 h-12 ${c.text} mb-3`} /> : <IconFallback />}
+        <RenderIcon icon={icon} className={`w-12 h-12 ${c.text} mb-3`} />
         <h3 className="text-xl font-bold text-slate-800">{title}</h3>
         <span className={`text-xs font-bold px-2 py-1 rounded mt-2 mb-4 ${c.badge}`}>{subtitle}</span>
         <ul className="text-left w-full space-y-2 text-sm text-slate-600">
@@ -574,7 +579,7 @@ const CallupsView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-xl font-bold text-red-700 mb-3 flex items-center gap-2">
-          {Map && <Map className="w-5 h-5" />} Áreas Geográficas
+          <RenderIcon icon={MapIcon} className="w-5 h-5" /> Áreas Geográficas
         </h3>
         <ul className="list-disc pl-5 space-y-2 text-slate-700">
           <li>Puedes solicitar <strong>todas las áreas/zonas que desees</strong>.</li>
@@ -584,7 +589,7 @@ const CallupsView = () => {
 
       <div className="bg-amber-50 rounded-lg shadow-md p-6 border-l-4 border-amber-500">
         <h3 className="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2">
-          {AlertCircle && <AlertCircle className="w-5 h-5" />} Actualización de Áreas (Fechas Corte)
+          <RenderIcon icon={AlertCircle} className="w-5 h-5" /> Actualización de Áreas (Fechas Corte)
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <DateCard date="9 de Marzo" />
@@ -599,9 +604,9 @@ const CallupsView = () => {
 };
 
 const PenaltiesView = () => {
-  const JustifiedCause = ({ icon: Icon, title, desc }) => (
+  const JustifiedCause = ({ icon, title, desc }) => (
     <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg hover:bg-green-50 transition-colors">
-      {Icon && <Icon className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />}
+      <RenderIcon icon={icon} className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
       <div>
         <h4 className="font-bold text-slate-800">{title}</h4>
         <p className="text-sm text-slate-600 leading-snug">{desc}</p>
@@ -617,7 +622,7 @@ const PenaltiesView = () => {
 
       <div className="bg-red-50 border-l-4 border-red-500 rounded-lg p-6 shadow-md">
         <h3 className="text-xl font-bold text-red-800 mb-4 flex items-center gap-2">
-          {AlertTriangle && <AlertTriangle className="w-6 h-6" />} Sanciones por Rechazo Injustificado
+          <RenderIcon icon={AlertTriangle} className="w-6 h-6" /> Sanciones por Rechazo Injustificado
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
@@ -646,7 +651,7 @@ const PenaltiesView = () => {
 
       <div className="bg-amber-50 border-l-4 border-amber-500 rounded-lg p-6 shadow-md flex flex-col md:flex-row gap-6 items-center">
         <div className="bg-amber-100 p-4 rounded-full flex-shrink-0">
-          {PhoneMissed && <PhoneMissed className="w-8 h-8 text-amber-700" />}
+          <RenderIcon icon={PhoneMissed} className="w-8 h-8 text-amber-700" />
         </div>
         <div>
           <h3 className="text-lg font-bold text-amber-800 mb-2">No Contestación</h3>
@@ -674,7 +679,7 @@ const PenaltiesView = () => {
   );
 };
 
-// --- Main App & Routing ---
+// --- RENDERIZADO PRINCIPAL ---
 
 const ScrollHandler = () => {
   const { pathname } = useLocation();
@@ -709,13 +714,14 @@ const App = () => {
   );
 };
 
-// Mount con manejo de errores simple
+// Mount con comprobación de seguridad
 try {
   const rootElement = document.getElementById('root');
-  if (!rootElement) throw new Error("No se encontró el elemento root");
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(<App />);
+  if (rootElement) {
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<App />);
+  }
 } catch (error) {
-  console.error("Error al montar la aplicación:", error);
+  console.error("Error en montaje:", error);
   document.body.innerHTML += `<div style="color:red; padding:20px;">Error crítico de montaje: ${error.message}</div>`;
 }
