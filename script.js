@@ -1,17 +1,33 @@
-// Destructuring globals provided by CDNs
+// Acceso seguro a las librerías globales
+const React = window.React;
+const ReactDOM = window.ReactDOM;
+const ReactRouterDOM = window.ReactRouterDOM;
+
+// Desestructuración
 const { useState, useEffect, useCallback } = React;
 const { HashRouter, Routes, Route, Navigate, useLocation, NavLink } = ReactRouterDOM;
 
-// Safe access to Lucide icons global
-// El CDN de lucide-react expone "window.LucideReact"
-const LucideIcons = window.LucideReact || window.lucide || {};
+// CORRECCIÓN IMPORTANTE:
+// El CDN de lucide-react suele exponerse como "lucideReact" (camelCase), no "LucideReact".
+// Comprobamos varias opciones para asegurar que cargue.
+const LucideLibrary = window.lucideReact || window.LucideReact || window.lucide || {};
+
+// Si la librería no cargó bien, creamos un objeto vacío para que no rompa la página con "undefined"
+// y mostramos un error en consola.
+if (Object.keys(LucideLibrary).length === 0) {
+    console.error("Error crítico: No se ha podido cargar la librería de iconos Lucide.");
+}
+
 const { 
   Building2, LogIn, Calculator, PhoneIncoming, AlertTriangle, 
   Trash2, Save, MapPin, Mail, Phone, ArrowUp, Info, 
   CheckCircle, Globe, MousePointer, Hammer, Award, BookOpen, 
   GraduationCap, Clock, Calendar, Briefcase, Map, AlertCircle, 
   PhoneMissed, Heart, Baby, UserMinus 
-} = LucideIcons;
+} = LucideLibrary;
+
+// Componente Fallback para iconos si fallan
+const IconFallback = () => <span className="w-4 h-4 inline-block bg-red-200 rounded-full"></span>;
 
 // --- Components ---
 
@@ -21,7 +37,7 @@ const Header = () => {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="text-center md:text-left">
           <div className="flex items-center justify-center md:justify-start gap-3 mb-1">
-            <Building2 className="w-8 h-8 text-white" />
+            {Building2 ? <Building2 className="w-8 h-8 text-white" /> : <IconFallback />}
             <h1 className="text-2xl font-bold tracking-tight">UGT Sanidad Salamanca</h1>
           </div>
           <p className="text-red-100 text-sm font-medium opacity-90">Secretaría Sindical</p>
@@ -59,7 +75,7 @@ const Navigation = () => {
                 }`
               }
             >
-              {item.icon && <item.icon className="w-4 h-4" />}
+              {item.icon ? <item.icon className="w-4 h-4" /> : <IconFallback />}
               <span>{item.label}</span>
             </NavLink>
           </li>
@@ -87,7 +103,7 @@ const Footer = () => {
           <h4 className="text-red-400 font-semibold mb-4">Contacto</h4>
           <div className="space-y-3 text-sm">
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />
+              {MapPin && <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5" />}
               <p>Edificio 1 del Hospital Virgen Vega, semisótano.<br/>P.º de San Vicente, 58, 182<br/>37007 Salamanca</p>
             </div>
           </div>
@@ -97,15 +113,15 @@ const Footer = () => {
           <h4 className="text-red-400 font-semibold mb-4">Comunicación</h4>
           <div className="space-y-3 text-sm">
              <div className="flex items-center gap-3">
-              <Mail className="w-5 h-5 flex-shrink-0" />
+              {Mail && <Mail className="w-5 h-5 flex-shrink-0" />}
               <a href="mailto:sanidad.salamanca@ugt-sp.ugt.org" className="hover:text-white transition-colors">sanidad.salamanca@ugt-sp.ugt.org</a>
             </div>
             <div className="flex items-center gap-3">
-              <Phone className="w-5 h-5 flex-shrink-0" />
+              {Phone && <Phone className="w-5 h-5 flex-shrink-0" />}
               <span>923 29 11 00 – Ext. 55598</span>
             </div>
             <div className="flex items-center gap-3">
-              <Phone className="w-5 h-5 flex-shrink-0" />
+              {Phone && <Phone className="w-5 h-5 flex-shrink-0" />}
               <span>Móvil: 637 585 924</span>
             </div>
           </div>
@@ -162,7 +178,7 @@ const ScrollToTopButton = () => {
       className="fixed bottom-8 right-8 bg-[#C8102E] text-white p-3 rounded-full shadow-lg hover:bg-red-700 transition-all transform hover:scale-110 z-40 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
       aria-label="Volver arriba"
     >
-      <ArrowUp className="w-6 h-6" />
+      {ArrowUp ? <ArrowUp className="w-6 h-6" /> : "↑"}
     </button>
   );
 };
@@ -259,7 +275,7 @@ const Simulator = () => {
     <div className="bg-gradient-to-br from-slate-50 to-red-50 rounded-xl border border-red-100 overflow-hidden shadow-inner my-8">
       <div className="bg-[#C8102E] p-4 flex items-center justify-between">
         <h3 className="text-white font-bold text-lg flex items-center gap-2">
-          <Calculator className="w-5 h-5" />
+          {Calculator && <Calculator className="w-5 h-5" />}
           Simulador Básico de Puntos
         </h3>
         <span className="text-red-100 text-xs italic">Autobaremo no validado</span>
@@ -288,10 +304,10 @@ const Simulator = () => {
 
         <div className="mt-8 flex gap-4">
           <button onClick={calculate} className="flex-1 bg-[#C8102E] hover:bg-red-700 text-white py-3 px-6 rounded-lg font-bold shadow-md transform active:scale-95 transition-all flex items-center justify-center gap-2">
-            <Save className="w-5 h-5" /> Calcular Puntuación
+            {Save && <Save className="w-5 h-5" />} Calcular Puntuación
           </button>
           <button onClick={reset} className="bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 px-6 rounded-lg font-semibold shadow-sm transform active:scale-95 transition-all" aria-label="Limpiar">
-            <Trash2 className="w-5 h-5" />
+            {Trash2 && <Trash2 className="w-5 h-5" />}
           </button>
         </div>
 
@@ -335,7 +351,7 @@ const AccessView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-xl font-bold text-red-700 mb-3 flex items-center gap-2">
-          <Globe className="w-5 h-5" /> Naturaleza de la Bolsa
+          {Globe && <Globe className="w-5 h-5" />} Naturaleza de la Bolsa
         </h3>
         <p className="text-slate-700 leading-relaxed">
           La Bolsa Abierta y Permanente (BAPE) es un <strong>procedimiento telemático</strong> abierto permanentemente. 
@@ -345,7 +361,7 @@ const AccessView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-xl font-bold text-red-700 mb-3 flex items-center gap-2">
-          <CheckCircle className="w-5 h-5" /> Requisitos Clave
+          {CheckCircle && <CheckCircle className="w-5 h-5" />} Requisitos Clave
         </h3>
         <ul className="list-disc pl-5 space-y-2 text-slate-700">
           <li><strong>Titulación:</strong> Académica requerida para la categoría.</li>
@@ -357,7 +373,7 @@ const AccessView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-xl font-bold text-red-700 mb-6 flex items-center gap-2">
-          <MousePointer className="w-5 h-5" /> Proceso de Inscripción
+          {MousePointer && <MousePointer className="w-5 h-5" />} Proceso de Inscripción
         </h3>
         <div className="space-y-4">
           {steps.map((step, index) => (
@@ -368,7 +384,7 @@ const AccessView = () => {
               <div>
                 <h4 className={`font-bold ${step.isWarning ? 'text-red-700' : 'text-red-900'}`}>{step.title}</h4>
                 <p className="text-slate-600 text-sm mt-1">{step.desc}</p>
-                {step.isWarning && <Hammer className="w-5 h-5 text-red-500 mt-2" />}
+                {step.isWarning && Hammer && <Hammer className="w-5 h-5 text-red-500 mt-2" />}
               </div>
             </div>
           ))}
@@ -377,7 +393,7 @@ const AccessView = () => {
 
       <div className="bg-cyan-50 rounded-lg shadow-md p-6 border-l-4 border-cyan-500">
         <h3 className="text-xl font-bold text-cyan-700 mb-3 flex items-center gap-2">
-          <Info className="w-5 h-5" /> Fecha de Corte
+          {Info && <Info className="w-5 h-5" />} Fecha de Corte
         </h3>
         <p className="mb-2 font-medium">Es una "foto fija" del estado de los aspirantes.</p>
         <ul className="list-disc pl-5 space-y-1 text-slate-700 text-sm">
@@ -407,7 +423,7 @@ const ScoreView = () => {
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600 h-full">
           <h3 className="text-lg font-bold text-red-700 mb-4 flex items-center gap-2">
-            <Award className="w-5 h-5" /> Experiencia Profesional
+            {Award && <Award className="w-5 h-5" />} Experiencia Profesional
           </h3>
           <table className="w-full text-sm">
             <thead className="bg-[#C8102E] text-white">
@@ -435,7 +451,7 @@ const ScoreView = () => {
 
         <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600 h-full">
           <h3 className="text-lg font-bold text-red-700 mb-4 flex items-center gap-2">
-            <BookOpen className="w-5 h-5" /> Formación Continuada
+            {BookOpen && <BookOpen className="w-5 h-5" />} Formación Continuada
           </h3>
           <p className="text-xs text-slate-500 mb-3 italic">
             Cursos relacionados y finalizados en los últimos 10 años.
@@ -469,7 +485,7 @@ const ScoreView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-lg font-bold text-red-700 mb-3 flex items-center gap-2">
-          <GraduationCap className="w-5 h-5" /> Oposición
+          {GraduationCap && <GraduationCap className="w-5 h-5" />} Oposición
         </h3>
         <p className="text-slate-700 mb-2">
           Superación de ejercicios en procesos selectivos de la misma categoría en <strong>cualquier Administración Pública</strong>.
@@ -496,7 +512,7 @@ const CallupsView = () => {
     const c = colors[color];
     return (
       <div className={`bg-white rounded-xl shadow-lg border-t-4 ${c.border} p-6 flex flex-col items-center text-center transition-transform hover:-translate-y-1`}>
-        <Icon className={`w-12 h-12 ${c.text} mb-3`} />
+        {Icon ? <Icon className={`w-12 h-12 ${c.text} mb-3`} /> : <IconFallback />}
         <h3 className="text-xl font-bold text-slate-800">{title}</h3>
         <span className={`text-xs font-bold px-2 py-1 rounded mt-2 mb-4 ${c.badge}`}>{subtitle}</span>
         <ul className="text-left w-full space-y-2 text-sm text-slate-600">
@@ -558,7 +574,7 @@ const CallupsView = () => {
 
       <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
         <h3 className="text-xl font-bold text-red-700 mb-3 flex items-center gap-2">
-          <Map className="w-5 h-5" /> Áreas Geográficas
+          {Map && <Map className="w-5 h-5" />} Áreas Geográficas
         </h3>
         <ul className="list-disc pl-5 space-y-2 text-slate-700">
           <li>Puedes solicitar <strong>todas las áreas/zonas que desees</strong>.</li>
@@ -568,7 +584,7 @@ const CallupsView = () => {
 
       <div className="bg-amber-50 rounded-lg shadow-md p-6 border-l-4 border-amber-500">
         <h3 className="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2">
-          <AlertCircle className="w-5 h-5" /> Actualización de Áreas (Fechas Corte)
+          {AlertCircle && <AlertCircle className="w-5 h-5" />} Actualización de Áreas (Fechas Corte)
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <DateCard date="9 de Marzo" />
@@ -585,7 +601,7 @@ const CallupsView = () => {
 const PenaltiesView = () => {
   const JustifiedCause = ({ icon: Icon, title, desc }) => (
     <div className="flex items-start gap-3 p-4 bg-slate-50 rounded-lg hover:bg-green-50 transition-colors">
-      <Icon className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+      {Icon && <Icon className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />}
       <div>
         <h4 className="font-bold text-slate-800">{title}</h4>
         <p className="text-sm text-slate-600 leading-snug">{desc}</p>
@@ -601,7 +617,7 @@ const PenaltiesView = () => {
 
       <div className="bg-red-50 border-l-4 border-red-500 rounded-lg p-6 shadow-md">
         <h3 className="text-xl font-bold text-red-800 mb-4 flex items-center gap-2">
-          <AlertTriangle className="w-6 h-6" /> Sanciones por Rechazo Injustificado
+          {AlertTriangle && <AlertTriangle className="w-6 h-6" />} Sanciones por Rechazo Injustificado
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
@@ -630,7 +646,7 @@ const PenaltiesView = () => {
 
       <div className="bg-amber-50 border-l-4 border-amber-500 rounded-lg p-6 shadow-md flex flex-col md:flex-row gap-6 items-center">
         <div className="bg-amber-100 p-4 rounded-full flex-shrink-0">
-          <PhoneMissed className="w-8 h-8 text-amber-700" />
+          {PhoneMissed && <PhoneMissed className="w-8 h-8 text-amber-700" />}
         </div>
         <div>
           <h3 className="text-lg font-bold text-amber-800 mb-2">No Contestación</h3>
@@ -693,6 +709,13 @@ const App = () => {
   );
 };
 
-// Mount
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+// Mount con manejo de errores simple
+try {
+  const rootElement = document.getElementById('root');
+  if (!rootElement) throw new Error("No se encontró el elemento root");
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(<App />);
+} catch (error) {
+  console.error("Error al montar la aplicación:", error);
+  document.body.innerHTML += `<div style="color:red; padding:20px;">Error crítico de montaje: ${error.message}</div>`;
+}
