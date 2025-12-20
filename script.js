@@ -15,12 +15,13 @@ const LucideLibrary = window.lucideReact || window.lucide || {};
 // IMPORTANTE: Renombramos 'Map' a 'MapIcon' inmediatamente.
 // Si no lo hacemos, la variable 'Map' sobrescribe el constructor Map() nativo de JS
 // y React explota porque lo necesita internamente.
-const { 
-  Building2, LogIn, Calculator, PhoneIncoming, AlertTriangle, 
-  Trash2, Save, MapPin, Mail, Phone, ArrowUp, Info, 
-  CheckCircle, Globe, MousePointer, Hammer, Award, BookOpen, 
-  GraduationCap, Clock, Calendar, Briefcase, Map: MapIcon, AlertCircle, 
-  PhoneMissed, Heart, Baby, UserMinus 
+const {
+  Building2, LogIn, Calculator, PhoneIncoming, AlertTriangle,
+  Trash2, Save, MapPin, Mail, Phone, ArrowUp, Info,
+  CheckCircle, Globe, MousePointer, Hammer, Award, BookOpen,
+  GraduationCap, Clock, Calendar, Briefcase, Map: MapIcon, AlertCircle,
+  PhoneMissed, Heart, Baby, UserMinus, Bell, Edit, Plus, X,
+  List, FileText, CheckCircle2, XCircle, Clock3, FileCheck
 } = LucideLibrary;
 
 // Componente de respaldo por si falla la carga de un icono específico
@@ -62,6 +63,7 @@ const Navigation = () => {
     { to: '/puntuacion', label: 'Puntuación', icon: Calculator },
     { to: '/llamamientos', label: 'Llamamientos', icon: PhoneIncoming },
     { to: '/penalizaciones', label: 'Penalizaciones', icon: AlertTriangle },
+    { to: '/estado-bolsas', label: 'Estado de Bolsas', icon: List },
   ];
 
   return (
@@ -73,10 +75,9 @@ const Navigation = () => {
               to={item.to}
               className={({ isActive }) =>
                 `flex items-center justify-center gap-2 py-4 px-2 text-sm font-bold uppercase transition-all duration-300 border-b-4 h-full
-                ${
-                  isActive
-                    ? 'text-red-700 border-red-600 bg-red-50'
-                    : 'text-slate-600 border-transparent hover:bg-slate-50 hover:text-red-600'
+                ${isActive
+                  ? 'text-red-700 border-red-600 bg-red-50'
+                  : 'text-slate-600 border-transparent hover:bg-slate-50 hover:text-red-600'
                 }`
               }
             >
@@ -109,7 +110,7 @@ const Footer = () => {
           <div className="space-y-3 text-sm">
             <div className="flex items-start gap-3">
               <RenderIcon icon={MapPin} className="w-5 h-5 flex-shrink-0 mt-0.5" />
-              <p>Edificio 1 del Hospital Virgen Vega, semisótano.<br/>P.º de San Vicente, 58, 182<br/>37007 Salamanca</p>
+              <p>Edificio 1 del Hospital Virgen Vega, semisótano.<br />P.º de San Vicente, 58, 182<br />37007 Salamanca</p>
             </div>
           </div>
         </div>
@@ -117,7 +118,7 @@ const Footer = () => {
         <div>
           <h4 className="text-red-400 font-semibold mb-4">Comunicación</h4>
           <div className="space-y-3 text-sm">
-             <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3">
               <RenderIcon icon={Mail} className="w-5 h-5 flex-shrink-0" />
               <a href="mailto:sanidad.salamanca@ugt-sp.ugt.org" className="hover:text-white transition-colors">sanidad.salamanca@ugt-sp.ugt.org</a>
             </div>
@@ -254,13 +255,13 @@ const Simulator = () => {
   };
 
   const calculate = useCallback(() => {
-    const experiencia = 
-      (inputs.mesesSNS * 0.30) + 
-      (inputs.mesesOtros * 0.25) + 
+    const experiencia =
+      (inputs.mesesSNS * 0.30) +
+      (inputs.mesesOtros * 0.25) +
       (inputs.mesesPrivado * 0.10);
 
-    const formacion = 
-      (inputs.creditosOrdinarios * 0.20) + 
+    const formacion =
+      (inputs.creditosOrdinarios * 0.20) +
       (inputs.creditosECTS * 0.50);
 
     const oposicion = Math.min(inputs.ejerciciosOposicion, 3) * 5;
@@ -359,7 +360,7 @@ const AccessView = () => {
           <RenderIcon icon={Globe} className="w-5 h-5" /> Naturaleza de la Bolsa
         </h3>
         <p className="text-slate-700 leading-relaxed">
-          La Bolsa Abierta y Permanente (BAPE) es un <strong>procedimiento telemático</strong> abierto permanentemente. 
+          La Bolsa Abierta y Permanente (BAPE) es un <strong>procedimiento telemático</strong> abierto permanentemente.
           No deriva directamente de procesos selectivos, sino que es un sistema independiente de gestión de personal temporal.
         </p>
       </div>
@@ -471,14 +472,14 @@ const ScoreView = () => {
             <tbody className="divide-y divide-slate-100">
               <tr className="hover:bg-slate-50">
                 <td className="p-3">
-                  Crédito Ordinario<br/>
+                  Crédito Ordinario<br />
                   <span className="text-xs text-slate-500">10 horas</span>
                 </td>
                 <td className="p-3 text-right font-bold text-red-600">0,20</td>
               </tr>
               <tr className="hover:bg-slate-50">
                 <td className="p-3">
-                  Crédito ECTS<br/>
+                  Crédito ECTS<br />
                   <span className="text-xs text-slate-500">25-30 horas</span>
                 </td>
                 <td className="p-3 text-right font-bold text-red-600">0,50</td>
@@ -551,15 +552,15 @@ const CallupsView = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <AppointmentCard 
+        <AppointmentCard
           icon={Briefcase} title="Interinidad" color="green" subtitle="Máxima estabilidad"
           features={["Plaza vacante sin titular", "Mayor duración temporal", "Prioridad máxima"]}
         />
-        <AppointmentCard 
+        <AppointmentCard
           icon={Calendar} title="Larga Duración" color="cyan" subtitle="Con reserva de plaza"
           features={["Sustituciones ≥ 6 meses", "Reserva de plaza garantizada", "Estabilidad media-alta"]}
         />
-        <AppointmentCard 
+        <AppointmentCard
           icon={Clock} title="Corta Duración" color="orange" subtitle="Temporal"
           features={["Sustituciones < 6 meses", "Nombramientos eventuales", "Guardias y refuerzos"]}
         />
@@ -571,8 +572,8 @@ const CallupsView = () => {
           <StrategyItem title="Si aceptas Corta Duración" available={["Larga Duración", "Interinidades"]} />
           <StrategyItem title="Si aceptas Larga Duración" available={["Interinidades"]} note="No disponible para Corta Duración" />
           <div className="bg-white p-4 rounded border border-red-100">
-             <h4 className="font-bold text-slate-800 mb-1">✅ Si aceptas Interinidad</h4>
-             <p className="text-slate-600 text-sm">Quedas <strong>NO DISPONIBLE</strong> para otros llamamientos.</p>
+            <h4 className="font-bold text-slate-800 mb-1">✅ Si aceptas Interinidad</h4>
+            <p className="text-slate-600 text-sm">Quedas <strong>NO DISPONIBLE</strong> para otros llamamientos.</p>
           </div>
         </div>
       </div>
@@ -679,6 +680,376 @@ const PenaltiesView = () => {
   );
 };
 
+const BolsasStatusView = () => {
+  // ========================================
+  // DATOS DE ESTADO DE BOLSAS - EDITAR AQUÍ
+  // ========================================
+  // Última actualización: 20/12/2024 09:40
+  // Datos extraídos de la web oficial de SACYL
+
+  const bolsasData = [
+    {
+      id: 1,
+      categoria: 'ENFERMERO/A',
+      estado: 'documentacion', // abierta, cerrada, documentacion, reclamacion, definitiva
+      ultimoCorte: '2024',
+      fechaCorte: '20/02/2025',
+      descripcion: 'Publicada Resolución por la que se concede plazo para la presentación de la documentación acreditativa de requisitos y méritos',
+      cortes: [
+        { año: '2024', fecha: '20/02/2025', estado: 'En fase de documentación' },
+        { año: '2022', fecha: '19/06/2024', estado: 'Lista definitiva publicada' },
+        { año: '2020', fecha: '22/09/2022', estado: 'Lista definitiva publicada' }
+      ]
+    },
+    {
+      id: 2,
+      categoria: 'AUXILIAR ADMINISTRATIVO',
+      estado: 'documentacion',
+      ultimoCorte: '2024',
+      fechaCorte: '26/11/2024',
+      descripcion: 'Publicada Resolución por la que se concede plazo para la presentación de la documentación acreditativa de requisitos y méritos',
+      cortes: [
+        { año: '2024', fecha: '26/11/2024', estado: 'En fase de documentación' }
+      ]
+    },
+    {
+      id: 3,
+      categoria: 'CELADOR',
+      estado: 'documentacion',
+      ultimoCorte: '2025',
+      fechaCorte: '28/04/2025',
+      descripcion: 'Publicada Resolución por la que se concede plazo para la presentación de la documentación acreditativa de requisitos y méritos',
+      cortes: [
+        { año: '2025', fecha: '28/04/2025', estado: 'En fase de documentación' }
+      ]
+    },
+    {
+      id: 4,
+      categoria: 'FISIOTERAPEUTA',
+      estado: 'definitiva',
+      ultimoCorte: '2025',
+      fechaCorte: '11/06/2025',
+      descripcion: 'Publicada Resolución por la que se procede a la publicación de la relación definitiva de las personas candidatas',
+      cortes: [
+        { año: '2025', fecha: '11/06/2025', estado: 'Lista definitiva publicada' }
+      ]
+    },
+    {
+      id: 5,
+      categoria: 'ENFERMERO/A ESPECIALISTA MATRONA',
+      estado: 'definitiva',
+      ultimoCorte: '2025',
+      fechaCorte: '18/12/2025',
+      descripcion: 'Publicada Resolución por la que se procede a la publicación de la relación definitiva de las personas candidatas',
+      cortes: [
+        { año: '2025', fecha: '18/12/2025', estado: 'Lista definitiva publicada' }
+      ]
+    },
+    {
+      id: 6,
+      categoria: 'ENFERMERO/A ESPECIALISTA FAMILIAR Y COMUNITARIA',
+      estado: 'definitiva',
+      ultimoCorte: '2025',
+      fechaCorte: '08/10/2025',
+      descripcion: 'Publicada Resolución por la que se procede a la publicación de la relación definitiva de las personas candidatas',
+      cortes: [
+        { año: '2025', fecha: '08/10/2025', estado: 'Lista definitiva publicada' }
+      ]
+    }
+  ];
+
+  const getEstadoBadge = (estado) => {
+    const estados = {
+      abierta: { label: 'Abierta', color: 'bg-green-100 text-green-800', icon: CheckCircle2 },
+      cerrada: { label: 'Cerrada', color: 'bg-gray-100 text-gray-800', icon: XCircle },
+      documentacion: { label: 'Fase Documentación', color: 'bg-blue-100 text-blue-800', icon: FileText },
+      reclamacion: { label: 'Fase Reclamación', color: 'bg-yellow-100 text-yellow-800', icon: AlertCircle },
+      definitiva: { label: 'Lista Definitiva', color: 'bg-purple-100 text-purple-800', icon: FileCheck }
+    };
+    return estados[estado] || estados.cerrada;
+  };
+
+  const CategoriaCard = ({ bolsa }) => {
+    const estadoBadge = getEstadoBadge(bolsa.estado);
+
+    return (
+      <div className="bg-white rounded-lg shadow-md border-l-4 border-red-600 p-6 hover:shadow-lg transition-all">
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex-1">
+            <h3 className="text-xl font-bold text-slate-800 mb-2">{bolsa.categoria}</h3>
+            <div className="flex items-center gap-2 mb-3">
+              <RenderIcon icon={estadoBadge.icon} className="w-4 h-4" />
+              <span className={`text-xs font-bold px-3 py-1 rounded ${estadoBadge.color}`}>
+                {estadoBadge.label}
+              </span>
+            </div>
+          </div>
+          <div className="text-right">
+            <div className="text-xs text-slate-500 mb-1">Último Corte</div>
+            <div className="text-lg font-bold text-red-700">{bolsa.ultimoCorte}</div>
+            <div className="text-xs text-slate-600">{bolsa.fechaCorte}</div>
+          </div>
+        </div>
+
+        <p className="text-sm text-slate-600 mb-4 leading-relaxed">
+          {bolsa.descripcion}
+        </p>
+
+        {bolsa.cortes && bolsa.cortes.length > 0 && (
+          <div className="border-t border-slate-200 pt-4">
+            <h4 className="text-sm font-semibold text-slate-700 mb-2 flex items-center gap-2">
+              <RenderIcon icon={Clock3} className="w-4 h-4" />
+              Historial de Cortes
+            </h4>
+            <div className="space-y-2">
+              {bolsa.cortes.map((corte, idx) => (
+                <div key={idx} className="flex justify-between items-center text-xs bg-slate-50 p-2 rounded">
+                  <span className="font-medium text-slate-700">Corte {corte.año}</span>
+                  <span className="text-slate-500">{corte.fecha}</span>
+                  <span className="text-slate-600 italic">{corte.estado}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="space-y-8 animate-in">
+      <div className="border-b-4 border-red-600 pb-2 mb-6">
+        <h2 className="text-3xl font-bold text-red-700">Estado de las Bolsas por Categoría</h2>
+        <p className="text-slate-500 text-sm mt-2">Información actualizada sobre el estado de cada convocatoria BAPE</p>
+      </div>
+
+      <div className="bg-cyan-50 border-l-4 border-cyan-500 rounded-lg p-6 shadow-sm">
+        <h3 className="text-lg font-bold text-cyan-800 mb-2 flex items-center gap-2">
+          <RenderIcon icon={Info} className="w-5 h-5" />
+          Leyenda de Estados
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold px-3 py-1 rounded bg-green-100 text-green-800">Abierta</span>
+            <span className="text-xs text-slate-600">Inscripción activa</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold px-3 py-1 rounded bg-blue-100 text-blue-800">Fase Documentación</span>
+            <span className="text-xs text-slate-600">Presentar documentos</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold px-3 py-1 rounded bg-yellow-100 text-yellow-800">Fase Reclamación</span>
+            <span className="text-xs text-slate-600">Periodo de alegaciones</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold px-3 py-1 rounded bg-purple-100 text-purple-800">Lista Definitiva</span>
+            <span className="text-xs text-slate-600">Bolsa operativa</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold px-3 py-1 rounded bg-gray-100 text-gray-800">Cerrada</span>
+            <span className="text-xs text-slate-600">No admite inscripciones</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6">
+        {bolsasData.map(bolsa => (
+          <CategoriaCard key={bolsa.id} bolsa={bolsa} />
+        ))}
+      </div>
+
+      <div className="bg-amber-50 border-l-4 border-amber-500 rounded-lg p-6 shadow-sm">
+        <h3 className="text-lg font-bold text-amber-800 mb-2 flex items-center gap-2">
+          <RenderIcon icon={AlertCircle} className="w-5 h-5" />
+          Nota Importante
+        </h3>
+        <p className="text-slate-700 text-sm leading-relaxed">
+          Esta información se actualiza periódicamente desde la web oficial de SACYL.
+          Para información oficial y actualizada en tiempo real, consulta siempre el{' '}
+          <a
+            href="https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas"
+            target="_blank"
+            rel="noreferrer"
+            className="text-amber-700 font-semibold hover:underline"
+          >
+            portal oficial de SACYL
+          </a>.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const NewsView = () => {
+  // ========================================
+  // DATOS ESTÁTICOS - EDITAR AQUÍ
+  // ========================================
+  // Última actualización: 19/12/2024 21:44
+  // Generado automáticamente con actualizar_novedades.py
+  const staticNews = [
+    {
+      id: 1,
+      title: 'Próxima Fecha de Corte BAPE',
+      description: 'Recuerda actualizar tus áreas geográficas y méritos antes del 09/03/2025. Todos los cambios deben estar registrados antes de las 23:59:59.',
+      category: 'general',
+      dueDate: '2025-03-09'
+    },
+    {
+      id: 2,
+      title: 'Convocatoria: AUXILIAR ADMINISTRATIVO',
+      description: 'Publicada Resolución por la que se concede plazo para la presentación de la documentación acreditativa de requisitos y méritos de la bolsa de empleo',
+      category: 'convocatoria',
+      dueDate: '2025-03-19'
+    },
+    {
+      id: 3,
+      title: 'Convocatoria: CELADOR',
+      description: 'Publicada Resolución por la que se concede plazo para la presentación de la documentación acreditativa de requisitos y méritos de la bolsa de empleo',
+      category: 'convocatoria',
+      dueDate: '2025-03-19'
+    },
+    {
+      id: 4,
+      title: 'Convocatoria: ENFERMERO/A',
+      description: 'Publicada Resolución por la que se concede plazo para la presentación de la documentación acreditativa de requisitos y méritos de la bolsa de empleo',
+      category: 'convocatoria',
+      dueDate: '2025-02-20'
+    },
+    {
+      id: 5,
+      title: 'Convocatoria: FISIOTERAPEUTA',
+      description: 'Publicada Resolución por la que se procede a la publicación de la relación definitiva de las personas candidatas de la bolsa de empleo',
+      category: 'convocatoria',
+      dueDate: '2025-06-11'
+    },
+    {
+      id: 6,
+      title: 'Recordatorio: Certificado Digital',
+      description: 'Verifica la vigencia de tu certificado digital para poder acceder al portal BAPE sin problemas. Desde julio 2025 es obligatorio.',
+      category: 'general',
+      dueDate: '2025-07-01'
+    }
+  ];
+
+  const categories = [
+    { id: 'general', label: 'General', color: 'blue' },
+    { id: 'normativa', label: 'Normativa', color: 'purple' },
+    { id: 'convocatoria', label: 'Convocatoria', color: 'green' },
+    { id: 'formacion', label: 'Formación', color: 'orange' },
+    { id: 'urgente', label: 'Urgente', color: 'red' }
+  ];
+
+  const getDaysUntilDue = (dueDate) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const due = new Date(dueDate);
+    due.setHours(0, 0, 0, 0);
+    const diffTime = due - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  const getCategoryColor = (categoryId) => {
+    const category = categories.find(c => c.id === categoryId);
+    const colors = {
+      blue: { bg: 'bg-blue-50', border: 'border-blue-500', text: 'text-blue-700', badge: 'bg-blue-100 text-blue-800' },
+      purple: { bg: 'bg-purple-50', border: 'border-purple-500', text: 'text-purple-700', badge: 'bg-purple-100 text-purple-800' },
+      green: { bg: 'bg-green-50', border: 'border-green-500', text: 'text-green-700', badge: 'bg-green-100 text-green-800' },
+      orange: { bg: 'bg-orange-50', border: 'border-orange-500', text: 'text-orange-700', badge: 'bg-orange-100 text-orange-800' },
+      red: { bg: 'bg-red-50', border: 'border-red-500', text: 'text-red-700', badge: 'bg-red-100 text-red-800' }
+    };
+    return colors[category?.color || 'blue'];
+  };
+
+  const NewsCard = ({ item }) => {
+    const daysUntil = getDaysUntilDue(item.dueDate);
+    const colors = getCategoryColor(item.category);
+    const category = categories.find(c => c.id === item.category);
+    const isExpired = daysUntil < 0;
+    const isUrgent = daysUntil >= 0 && daysUntil <= 7;
+
+    return (
+      <div className={`bg-white rounded-lg shadow-md border-l-4 ${colors.border} p-5 transition-all hover:shadow-lg ${isExpired ? 'opacity-60' : ''}`}>
+        <div className="flex items-start mb-3">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <span className={`text-xs font-bold px-2 py-1 rounded ${colors.badge}`}>
+                {category?.label}
+              </span>
+              {isExpired && (
+                <span className="text-xs font-bold px-2 py-1 rounded bg-gray-100 text-gray-600">
+                  VENCIDA
+                </span>
+              )}
+              {isUrgent && !isExpired && (
+                <span className="text-xs font-bold px-2 py-1 rounded bg-yellow-100 text-yellow-800 animate-pulse">
+                  ⚠️ PRÓXIMA
+                </span>
+              )}
+            </div>
+            <h3 className="text-lg font-bold text-slate-800 mb-2">{item.title}</h3>
+            {item.description && (
+              <p className="text-sm text-slate-600 mb-3 leading-relaxed">{item.description}</p>
+            )}
+            <div className="flex items-center gap-4 text-xs text-slate-500">
+              <div className="flex items-center gap-1">
+                <RenderIcon icon={Calendar} className="w-4 h-4" />
+                <span>Vence: {new Date(item.dueDate).toLocaleDateString('es-ES')}</span>
+              </div>
+              {!isExpired && (
+                <span className={`font-semibold ${isUrgent ? 'text-yellow-700' : 'text-slate-600'}`}>
+                  {daysUntil === 0 ? 'Hoy' : daysUntil === 1 ? 'Mañana' : `${daysUntil} días`}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const groupedNews = categories.map(category => ({
+    ...category,
+    items: staticNews.filter(item => item.category === category.id)
+  })).filter(group => group.items.length > 0);
+
+  return (
+    <div className="space-y-8 animate-in">
+      <div className="border-b-4 border-red-600 pb-2 mb-6">
+        <h2 className="text-3xl font-bold text-red-700">Novedades y Fechas Importantes</h2>
+        <p className="text-slate-500 text-sm mt-2">Información oficial actualizada por UGT Sanidad Salamanca</p>
+      </div>
+
+      {staticNews.length === 0 ? (
+        <div className="bg-slate-50 rounded-lg border-2 border-dashed border-slate-300 p-12 text-center">
+          <RenderIcon icon={Bell} className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+          <p className="text-slate-500 text-lg">No hay novedades publicadas</p>
+          <p className="text-slate-400 text-sm mt-2">Próximamente se publicarán actualizaciones importantes</p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {groupedNews.map(group => (
+            <div key={group.id}>
+              <h3 className="text-xl font-bold text-slate-700 mb-4 flex items-center gap-2">
+                <span className={`w-3 h-3 rounded-full bg-${group.color}-500`}></span>
+                {group.label}
+                <span className="text-sm font-normal text-slate-400">({group.items.length})</span>
+              </h3>
+              <div className="space-y-4">
+                {group.items
+                  .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+                  .map(item => (
+                    <NewsCard key={item.id} item={item} />
+                  ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 // --- RENDERIZADO PRINCIPAL ---
 
 const ScrollHandler = () => {
@@ -696,7 +1067,7 @@ const App = () => {
         <ScrollHandler />
         <Header />
         <Navigation />
-        
+
         <main className="flex-grow max-w-6xl mx-auto w-full p-4 md:p-6 lg:p-8">
           <Routes>
             <Route path="/" element={<Navigate to="/acceso" replace />} />
@@ -704,6 +1075,7 @@ const App = () => {
             <Route path="/puntuacion" element={<ScoreView />} />
             <Route path="/llamamientos" element={<CallupsView />} />
             <Route path="/penalizaciones" element={<PenaltiesView />} />
+            <Route path="/estado-bolsas" element={<BolsasStatusView />} />
           </Routes>
         </main>
 
