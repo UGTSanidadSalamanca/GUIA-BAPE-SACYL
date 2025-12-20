@@ -21,7 +21,8 @@ const {
   CheckCircle, Globe, MousePointer, Hammer, Award, BookOpen,
   GraduationCap, Clock, Calendar, Briefcase, Map: MapIcon, AlertCircle,
   PhoneMissed, Heart, Baby, UserMinus, Bell, Edit, Plus, X,
-  List, FileText, CheckCircle2, XCircle, Clock3, FileCheck
+  List, FileText, CheckCircle2, XCircle, Clock3, FileCheck,
+  Search, Printer, ExternalLink, ShieldAlert
 } = LucideLibrary;
 
 // Componente de respaldo por si falla la carga de un icono específico
@@ -91,9 +92,26 @@ const Navigation = () => {
   );
 };
 
+const Disclaimer = () => (
+  <div className="max-w-6xl mx-auto px-4 mt-8">
+    <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg shadow-sm flex items-start gap-3">
+      <RenderIcon icon={ShieldAlert} className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" />
+      <div>
+        <h4 className="text-amber-800 font-bold text-sm uppercase tracking-wider mb-1">Aviso Legal e Informativo</h4>
+        <p className="text-amber-900 text-xs leading-relaxed">
+          Esta aplicación es una <strong>herramienta informativa independiente</strong> elaborada por UGT Sanidad Salamanca.
+          Aunque nos esforzamos por mantener los datos actualizados, la información vinculante y oficial es <strong>exclusivamente</strong> la publicada en el
+          Boletín Oficial de Castilla y León (BOCYL) y en el Portal de Salud de la Junta de Castilla y León (SACYL).
+          UGT no se hace responsable de posibles errores omisiones en la transscripción de datos oficiales.
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
 const Footer = () => {
   return (
-    <footer className="bg-slate-800 text-slate-300 mt-12 py-12 px-4">
+    <footer className="bg-slate-800 text-slate-300 mt-12 py-12 px-4 print:hidden">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div>
           <h3 className="text-white text-lg font-bold mb-2">UGT Sanidad Salamanca</h3>
@@ -101,9 +119,10 @@ const Footer = () => {
           <div className="mt-4 text-xs opacity-60">
             &copy; {new Date().getFullYear()} UGT Sanidad Salamanca.
             <br />
-            Esta guía tiene carácter informativo.
+            Guía de ayuda al profesional.
           </div>
         </div>
+        {/* ... Resto del footer ... */}
 
         <div>
           <h4 className="text-red-400 font-semibold mb-4">Contacto</h4>
@@ -137,13 +156,13 @@ const Footer = () => {
           <h4 className="text-red-400 font-semibold mb-4">Enlaces Oficiales</h4>
           <ul className="space-y-2 text-sm">
             <li>
-              <a href="https://www.saludcastillayleon.es/profesionales/es/bolsa" target="_blank" rel="noreferrer" className="hover:text-white hover:underline transition-colors">
-                Portal BAPE SACYL
+              <a href="https://www.saludcastillayleon.es/profesionales/es/bolsa" target="_blank" rel="noreferrer" className="hover:text-white hover:underline transition-colors font-semibold flex items-center gap-1">
+                Portal BAPE SACYL <RenderIcon icon={ExternalLink} className="w-3 h-3" />
               </a>
             </li>
             <li>
-              <a href="https://www.saludcastillayleon.es" target="_blank" rel="noreferrer" className="hover:text-white hover:underline transition-colors">
-                Salud Castilla y León
+              <a href="https://www.saludcastillayleon.es" target="_blank" rel="noreferrer" className="hover:text-white hover:underline transition-colors flex items-center gap-1">
+                Salud Castilla y León <RenderIcon icon={ExternalLink} className="w-3 h-3" />
               </a>
             </li>
           </ul>
@@ -329,6 +348,12 @@ const Simulator = () => {
                 <span className="font-black text-3xl text-green-600">{result.total.toFixed(2)} pts</span>
               </div>
             </div>
+            <button
+              onClick={() => window.print()}
+              className="mt-6 w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-900 text-white py-2 px-4 rounded font-bold text-sm transition-colors print:hidden"
+            >
+              <RenderIcon icon={Printer} className="w-4 h-4" /> Imprimir o Guardar Resultado
+            </button>
           </div>
         )}
       </div>
@@ -681,10 +706,12 @@ const PenaltiesView = () => {
 };
 
 const BolsasStatusView = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
   // ========================================
   // DATOS DE ESTADO DE BOLSAS - EDITAR AQUÍ
   // ========================================
-  // Última actualización: 20/12/2024 09:40
+  // Última actualización: 20/12/2024 14:40
   // Datos extraídos de la web oficial de SACYL
 
   const bolsasData = [
@@ -694,10 +721,11 @@ const BolsasStatusView = () => {
       estado: 'documentacion',
       ultimoCorte: '2024',
       fechaCorte: '20/02/2025',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/enfermero',
       descripcion: 'Publicada Resolución abriendo plazo para entrega de documentación (del 21 de febrero al 6 de marzo de 2025). Gestionado por Valladolid.',
       cortes: [
         { año: '2024', fecha: '20/02/2025', estado: 'Validación de méritos post-entrega' },
-        { año: '2022', fecha: '19/06/2024', estado: 'Lista definitiva publicada' }
+        { año: '2022', fecha: '19/06/2024', estado: 'Relación definitiva publicada' }
       ]
     },
     {
@@ -706,6 +734,7 @@ const BolsasStatusView = () => {
       estado: 'documentacion',
       ultimoCorte: '2024',
       fechaCorte: '26/11/2024',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/auxiliar-administrativo',
       descripcion: 'Corte 2024 en fase de validación tras finalizar entrega de documentación. Gestionado por G.S.A. Salamanca.',
       cortes: [
         { año: '2024', fecha: '26/11/2024', estado: 'Presentación documentación finalizada' },
@@ -718,6 +747,7 @@ const BolsasStatusView = () => {
       estado: 'documentacion',
       ultimoCorte: '2025',
       fechaCorte: '28/04/2025',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/celador',
       descripcion: 'Publicada resolución para presentación de documentos del nuevo corte. Proceso de estabilización en curso.',
       cortes: [
         { año: '2025', fecha: '28/04/2025', estado: 'En fase de documentación' },
@@ -730,6 +760,7 @@ const BolsasStatusView = () => {
       estado: 'reclamacion',
       ultimoCorte: '2023',
       fechaCorte: '12/11/2025',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/tecnico-cuidados-auxiliares-enfermeria',
       descripcion: 'Publicada relación provisional del Corte 2023. Urgencia por finalizar tras demora administrativa.',
       cortes: [
         { año: '2023', fecha: '12/11/2025', estado: 'Relación provisional publicada' },
@@ -742,6 +773,7 @@ const BolsasStatusView = () => {
       estado: 'reclamacion',
       ultimoCorte: '2024',
       fechaCorte: '24/11/2025',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/tecnico-superior-laboratorio-diagnostico-clinico',
       descripcion: 'Publicada relación provisional del Corte 2024. Periodo de alegaciones hasta el 9 de diciembre. Gestiona León.',
       cortes: [
         { año: '2024', fecha: '24/11/2025', estado: 'Relación provisional (en alegaciones)' }
@@ -753,6 +785,7 @@ const BolsasStatusView = () => {
       estado: 'definitiva',
       ultimoCorte: '2025',
       fechaCorte: '18/12/2025',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/enfermero-especialista-matrona',
       descripcion: 'Relación definitiva publicada con celeridad para cobertura de paritorios 2026. Vigente desde 19/12.',
       cortes: [
         { año: '2025', fecha: '18/12/2025', estado: 'Relación definitiva vigente' }
@@ -764,6 +797,7 @@ const BolsasStatusView = () => {
       estado: 'definitiva',
       ultimoCorte: '2024',
       fechaCorte: '08/10/2025',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/enfermero-especialista-familiar-comunitaria',
       descripcion: 'Relación definitiva publicada. Entrada en vigor el 9 de octubre de 2025.',
       cortes: [
         { año: '2024', fecha: '08/10/2025', estado: 'Relación definitiva publicada' }
@@ -914,6 +948,11 @@ const BolsasStatusView = () => {
     }
   ];
 
+  // Filtramos las categorías por el buscador
+  const filteredBolsas = bolsasData.filter(bolsa =>
+    bolsa.categoria.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const getEstadoBadge = (estado) => {
     const estados = {
       abierta: { label: 'Abierta', color: 'bg-green-100 text-green-800', icon: CheckCircle2 },
@@ -951,6 +990,20 @@ const BolsasStatusView = () => {
           {bolsa.descripcion}
         </p>
 
+        <div className="flex flex-wrap gap-3 mb-4">
+          {bolsa.pdfUrl && (
+            <a
+              href={bolsa.pdfUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 bg-red-50 text-red-700 px-3 py-1.5 rounded-md text-xs font-bold border border-red-100 hover:bg-red-100 transition-colors"
+            >
+              <RenderIcon icon={ExternalLink} className="w-3.5 h-3.5" />
+              Portal Oficial de la Categoría
+            </a>
+          )}
+        </div>
+
         {bolsa.cortes && bolsa.cortes.length > 0 && (
           <div className="border-t border-slate-200 pt-4">
             <h4 className="text-sm font-semibold text-slate-700 mb-2 flex items-center gap-2">
@@ -973,10 +1026,25 @@ const BolsasStatusView = () => {
   };
 
   return (
-    <div className="space-y-8 animate-in">
+    <div className="space-y-8 animate-in text-slate-800">
       <div className="border-b-4 border-red-600 pb-2 mb-6">
         <h2 className="text-3xl font-bold text-red-700">Estado de las Bolsas por Categoría</h2>
         <p className="text-slate-500 text-sm mt-2">Información actualizada sobre el estado de cada convocatoria BAPE</p>
+      </div>
+
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 sticky top-16 z-40">
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <RenderIcon icon={Search} className="h-5 w-5 text-slate-400" />
+          </div>
+          <input
+            type="text"
+            className="block w-full pl-10 pr-3 py-2 border border-slate-300 rounded-md leading-5 bg-white placeholder-slate-500 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"
+            placeholder="Buscar categoría (ej: Enfermero, Celador, Administrativo...)"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="bg-cyan-50 border-l-4 border-cyan-500 rounded-lg p-6 shadow-sm">
@@ -984,34 +1052,41 @@ const BolsasStatusView = () => {
           <RenderIcon icon={Info} className="w-5 h-5" />
           Leyenda de Estados
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 text-xs font-semibold">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold px-3 py-1 rounded bg-green-100 text-green-800">Abierta</span>
-            <span className="text-xs text-slate-600">Inscripción activa</span>
+            <span className="px-3 py-1 rounded bg-green-100 text-green-800">Abierta</span>
+            <span className="text-slate-600">Inscripción activa</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold px-3 py-1 rounded bg-blue-100 text-blue-800">Fase Documentación</span>
-            <span className="text-xs text-slate-600">Presentar documentos</span>
+            <span className="px-3 py-1 rounded bg-blue-100 text-blue-800">Fase Documentación</span>
+            <span className="text-slate-600">Presentar documentos</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold px-3 py-1 rounded bg-yellow-100 text-yellow-800">Fase Reclamación</span>
-            <span className="text-xs text-slate-600">Periodo de alegaciones</span>
+            <span className="px-3 py-1 rounded bg-yellow-100 text-yellow-800">Fase Reclamación</span>
+            <span className="text-slate-600">Periodo de alegaciones</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold px-3 py-1 rounded bg-purple-100 text-purple-800">Lista Definitiva</span>
-            <span className="text-xs text-slate-600">Bolsa operativa</span>
+            <span className="px-3 py-1 rounded bg-purple-100 text-purple-800">Lista Definitiva</span>
+            <span className="text-slate-600">Bolsa operativa</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold px-3 py-1 rounded bg-gray-100 text-gray-800">Cerrada</span>
-            <span className="text-xs text-slate-600">No admite inscripciones</span>
+            <span className="px-3 py-1 rounded bg-gray-100 text-gray-800">Cerrada</span>
+            <span className="text-slate-600">No admite inscripciones</span>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        {bolsasData.map(bolsa => (
-          <CategoriaCard key={bolsa.id} bolsa={bolsa} />
-        ))}
+        {filteredBolsas.length > 0 ? (
+          filteredBolsas.map(bolsa => (
+            <CategoriaCard key={bolsa.id} bolsa={bolsa} />
+          ))
+        ) : (
+          <div className="text-center py-12 bg-slate-50 rounded-lg border-2 border-dashed border-slate-200">
+            <RenderIcon icon={Info} className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+            <p className="text-slate-500 font-medium">No se han encontrado categorías que coincidan con tu búsqueda.</p>
+          </div>
+        )}
       </div>
 
       <div className="bg-amber-50 border-l-4 border-amber-500 rounded-lg p-6 shadow-sm">
@@ -1235,6 +1310,7 @@ const App = () => {
           </Routes>
         </main>
 
+        <Disclaimer />
         <Footer />
         <ScrollToTopButton />
       </div>
