@@ -691,14 +691,13 @@ const BolsasStatusView = () => {
     {
       id: 1,
       categoria: 'ENFERMERO/A',
-      estado: 'documentacion', // abierta, cerrada, documentacion, reclamacion, definitiva
+      estado: 'documentacion',
       ultimoCorte: '2024',
       fechaCorte: '20/02/2025',
-      descripcion: 'Publicada Resolución por la que se concede plazo para la presentación de la documentación acreditativa de requisitos y méritos',
+      descripcion: 'Publicada Resolución abriendo plazo para entrega de documentación (del 21 de febrero al 6 de marzo de 2025). Gestionado por Valladolid.',
       cortes: [
-        { año: '2024', fecha: '20/02/2025', estado: 'En fase de documentación' },
-        { año: '2022', fecha: '19/06/2024', estado: 'Lista definitiva publicada' },
-        { año: '2020', fecha: '22/09/2022', estado: 'Lista definitiva publicada' }
+        { año: '2024', fecha: '20/02/2025', estado: 'Validación de méritos post-entrega' },
+        { año: '2022', fecha: '19/06/2024', estado: 'Lista definitiva publicada' }
       ]
     },
     {
@@ -707,9 +706,10 @@ const BolsasStatusView = () => {
       estado: 'documentacion',
       ultimoCorte: '2024',
       fechaCorte: '26/11/2024',
-      descripcion: 'Publicada Resolución por la que se concede plazo para la presentación de la documentación acreditativa de requisitos y méritos',
+      descripcion: 'Corte 2024 en fase de validación tras finalizar entrega de documentación. Gestionado por G.S.A. Salamanca.',
       cortes: [
-        { año: '2024', fecha: '26/11/2024', estado: 'En fase de documentación' }
+        { año: '2024', fecha: '26/11/2024', estado: 'Presentación documentación finalizada' },
+        { año: '2021', fecha: '27/08/2024', estado: 'Relación definitiva vigente' }
       ]
     },
     {
@@ -718,42 +718,198 @@ const BolsasStatusView = () => {
       estado: 'documentacion',
       ultimoCorte: '2025',
       fechaCorte: '28/04/2025',
-      descripcion: 'Publicada Resolución por la que se concede plazo para la presentación de la documentación acreditativa de requisitos y méritos',
+      descripcion: 'Publicada resolución para presentación de documentos del nuevo corte. Proceso de estabilización en curso.',
+      cortes: [
+        { año: '2025', fecha: '28/04/2025', estado: 'En fase de documentación' },
+        { año: '2021', fecha: '04/09/2024', estado: 'Relación definitiva previa' }
+      ]
+    },
+    {
+      id: 4,
+      categoria: 'TÉCNICO EN CUIDADOS AUXILIARES DE ENFERMERÍA (TCAE)',
+      estado: 'reclamacion',
+      ultimoCorte: '2023',
+      fechaCorte: '12/11/2025',
+      descripcion: 'Publicada relación provisional del Corte 2023. Urgencia por finalizar tras demora administrativa.',
+      cortes: [
+        { año: '2023', fecha: '12/11/2025', estado: 'Relación provisional publicada' },
+        { año: '2020', fecha: '15/11/2022', estado: 'Relación definitiva vigente' }
+      ]
+    },
+    {
+      id: 5,
+      categoria: 'T.S. LABORATORIO DE DIAGNÓSTICO CLÍNICO',
+      estado: 'reclamacion',
+      ultimoCorte: '2024',
+      fechaCorte: '24/11/2025',
+      descripcion: 'Publicada relación provisional del Corte 2024. Periodo de alegaciones hasta el 9 de diciembre. Gestiona León.',
+      cortes: [
+        { año: '2024', fecha: '24/11/2025', estado: 'Relación provisional (en alegaciones)' }
+      ]
+    },
+    {
+      id: 6,
+      categoria: 'ENFERMERO/A MATRONA',
+      estado: 'definitiva',
+      ultimoCorte: '2025',
+      fechaCorte: '18/12/2025',
+      descripcion: 'Relación definitiva publicada con celeridad para cobertura de paritorios 2026. Vigente desde 19/12.',
+      cortes: [
+        { año: '2025', fecha: '18/12/2025', estado: 'Relación definitiva vigente' }
+      ]
+    },
+    {
+      id: 7,
+      categoria: 'ENFERMERO/A ESPECIALISTA FAMILIAR Y COMUNITARIA',
+      estado: 'definitiva',
+      ultimoCorte: '2024',
+      fechaCorte: '08/10/2025',
+      descripcion: 'Relación definitiva publicada. Entrada en vigor el 9 de octubre de 2025.',
+      cortes: [
+        { año: '2024', fecha: '08/10/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 8,
+      categoria: 'GESTIÓN ADMINISTRATIVA (A2)',
+      estado: 'definitiva',
+      ultimoCorte: '2024',
+      fechaCorte: '29/10/2025',
+      descripcion: 'Culminado proceso del Corte 2024. Disponibilidad de mandos intermedios para 2026.',
+      cortes: [
+        { año: '2024', fecha: '29/10/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 9,
+      categoria: 'ADMINISTRATIVO (C1)',
+      estado: 'reclamacion',
+      ultimoCorte: '2025',
+      fechaCorte: '21/10/2025',
+      descripcion: 'Publicadas listas provisionales de admitidos y excluidos. Convocatoria de plazas fijas en estudio.',
+      cortes: [
+        { año: '2025', fecha: '21/10/2025', estado: 'Listas provisionales publicadas' }
+      ]
+    },
+    {
+      id: 10,
+      categoria: 'ENFERMERO/A SALUD MENTAL / TRABAJO / GERIÁTRICA / PEDIÁTRICA',
+      estado: 'definitiva',
+      ultimoCorte: '2024',
+      fechaCorte: '24/04/2025',
+      descripcion: 'Sincronización de resoluciones definitivas para todas estas especialidades de enfermería.',
+      cortes: [
+        { año: '2024', fecha: '24/04/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 11,
+      categoria: 'T.S. IMAGEN PARA EL DIAGNÓSTICO',
+      estado: 'definitiva',
+      ultimoCorte: '2024',
+      fechaCorte: '22/07/2025',
+      descripcion: 'Estabilización de contratación para servicios de radiología hospitalaria.',
+      cortes: [
+        { año: '2024', fecha: '22/07/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 12,
+      categoria: 'T.S. DOCUMENTACIÓN SANITARIA / TÉCNICO EN FARMACIA',
+      estado: 'definitiva',
+      ultimoCorte: '2024',
+      fechaCorte: '20/02/2025',
+      descripcion: 'Publicadas relaciones definitivas en febrero de 2025.',
+      cortes: [
+        { año: '2024', fecha: '20/02/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 13,
+      categoria: 'T.S. NUTRICIÓN Y DIETÉTICA',
+      estado: 'definitiva',
+      ultimoCorte: '2025',
+      fechaCorte: '04/03/2025',
+      descripcion: 'Resolución definitiva tras validación de méritos específicos.',
+      cortes: [
+        { año: '2025', fecha: '04/03/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 14,
+      categoria: 'LOGOPEDA',
+      estado: 'definitiva',
+      ultimoCorte: '2025',
+      fechaCorte: '02/12/2025',
+      descripcion: 'Resolución reciente para gestión eficiente de servicios de rehabilitación hospitalaria.',
+      cortes: [
+        { año: '2025', fecha: '02/12/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 15,
+      categoria: 'TITULADO SUPERIOR EN ADMINISTRACIÓN SANITARIA',
+      estado: 'definitiva',
+      ultimoCorte: '2025',
+      fechaCorte: '02/12/2025',
+      descripcion: 'Refuerzo de la estructura de gestión técnica de la Consejería y Gerencias.',
+      cortes: [
+        { año: '2025', fecha: '02/12/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 16,
+      categoria: 'L.E. MEDICINA FAMILIAR Y COMUNITARIA (BAPE)',
+      estado: 'documentacion',
+      ultimoCorte: '2025',
+      fechaCorte: '28/04/2025',
+      descripcion: 'Categoría prioritaria para planificación de centros rurales. En fase de entrega de documentos.',
       cortes: [
         { año: '2025', fecha: '28/04/2025', estado: 'En fase de documentación' }
       ]
     },
     {
-      id: 4,
-      categoria: 'FISIOTERAPEUTA',
+      id: 17,
+      categoria: 'ODONTÓLOGO',
       estado: 'definitiva',
       ultimoCorte: '2025',
-      fechaCorte: '11/06/2025',
-      descripcion: 'Publicada Resolución por la que se procede a la publicación de la relación definitiva de las personas candidatas',
+      fechaCorte: '23/07/2025',
+      descripcion: 'Relación definitiva estabilizada para servicios de salud bucodental.',
       cortes: [
-        { año: '2025', fecha: '11/06/2025', estado: 'Lista definitiva publicada' }
+        { año: '2025', fecha: '23/07/2025', estado: 'Relación definitiva publicada' }
       ]
     },
     {
-      id: 5,
-      categoria: 'ENFERMERO/A ESPECIALISTA MATRONA',
-      estado: 'definitiva',
-      ultimoCorte: '2025',
-      fechaCorte: '18/12/2025',
-      descripcion: 'Publicada Resolución por la que se procede a la publicación de la relación definitiva de las personas candidatas',
-      cortes: [
-        { año: '2025', fecha: '18/12/2025', estado: 'Lista definitiva publicada' }
-      ]
-    },
-    {
-      id: 6,
-      categoria: 'ENFERMERO/A ESPECIALISTA FAMILIAR Y COMUNITARIA',
+      id: 18,
+      categoria: 'MÉDICO DE ADMISIÓN Y DOC. CLÍNICA',
       estado: 'definitiva',
       ultimoCorte: '2025',
       fechaCorte: '08/10/2025',
-      descripcion: 'Publicada Resolución por la que se procede a la publicación de la relación definitiva de las personas candidatas',
+      descripcion: 'Actualización de listados para gestión de flujos asistenciales.',
       cortes: [
-        { año: '2025', fecha: '08/10/2025', estado: 'Lista definitiva publicada' }
+        { año: '2025', fecha: '08/10/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 19,
+      categoria: 'T.E. PREVENCIÓN DE RIESGOS LABORALES',
+      estado: 'definitiva',
+      ultimoCorte: '2022',
+      fechaCorte: '30/05/2022',
+      descripcion: 'Última definitiva 2022. Nueva fecha de corte para actualizaciones fijada el 10/07/2023.',
+      cortes: [
+        { año: '2022', fecha: '30/05/2022', estado: 'Relación definitiva vigente' }
+      ]
+    },
+    {
+      id: 20,
+      categoria: 'T.S. HIGIENE BUCODENTAL',
+      estado: 'definitiva',
+      ultimoCorte: '2024',
+      fechaCorte: '26/11/2024',
+      descripcion: 'Relación definitiva publicada y operativa.',
+      cortes: [
+        { año: '2024', fecha: '26/11/2024', estado: 'Relación definitiva publicada' }
       ]
     }
   ];
