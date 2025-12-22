@@ -945,6 +945,17 @@ const BolsasStatusView = () => {
       cortes: [
         { año: '2024', fecha: '26/11/2024', estado: 'Relación definitiva publicada' }
       ]
+    },
+    {
+      id: 21,
+      categoria: 'TÉCNICO EN FARMACIA',
+      estado: 'definitiva',
+      ultimoCorte: '2023',
+      fechaCorte: '20/02/2025',
+      descripcion: 'Publicadas relaciones definitivas en febrero de 2025.',
+      cortes: [
+        { año: '2024', fecha: '20/02/2025', estado: 'Relación definitiva publicada' }
+      ]
     }
   ];
 
