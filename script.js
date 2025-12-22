@@ -849,7 +849,7 @@ const BolsasStatusView = () => {
     },
     {
       id: 12,
-      categoria: 'T.S. DOCUMENTACIÓN SANITARIA / TÉCNICO EN FARMACIA',
+      categoria: 'T.S. DOCUMENTACIÓN SANITARIA',
       estado: 'definitiva',
       ultimoCorte: '2024',
       fechaCorte: '20/02/2025',
@@ -954,9 +954,9 @@ const BolsasStatusView = () => {
       fechaCorte: '20/02/2025',
       descripcion: 'Publicadas relaciones definitivas en febrero de 2025.',
       cortes: [
-        { año: '2024', fecha: '20/02/2025', estado: 'Relación definitiva publicada' }
+        { año: '2023', fecha: '20/02/2025', estado: 'Relación definitiva publicada' }
       ]
-    }
+    },
   ];
 
   // Filtramos las categorías por el buscador
