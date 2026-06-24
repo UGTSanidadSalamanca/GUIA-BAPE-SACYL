@@ -25,11 +25,17 @@
 
     <!-- Babel for JSX transformation in browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Forzar runtime clásico para evitar import statements en contexto no-módulo -->
+    <script>
+      Babel.registerPreset('react-classic', {
+        presets: [[Babel.availablePresets['react'], { runtime: 'classic' }]]
+      });
+    </script>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-red-200 selection:text-red-900">
     <div id="root"></div>
 
     <!-- Main Logic -->
-    <script type="text/babel" data-presets="react,env" src="script.js"></script>
+    <script type="text/babel" data-presets="react-classic" src="script.js"></script>
 </body>
 </html>
