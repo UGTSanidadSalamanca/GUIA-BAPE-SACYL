@@ -1,32 +1,416 @@
-/* Smooth scrolling for the whole page */
+/* ============================================
+   GUÍA BAPE SACYL - UGT Sanidad Salamanca
+   Estilos oficiales con identidad UGT
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* --- VARIABLES DE DISEÑO UGT --- */
+:root {
+  --ugt-red:        #C8102E;
+  --ugt-red-dark:   #9b0c23;
+  --ugt-red-light:  #f5e6e9;
+  --ugt-red-mid:    #e8102e20;
+  --slate-50:       #f8fafc;
+  --slate-100:      #f1f5f9;
+  --slate-800:      #1e293b;
+  --radius-lg:      0.75rem;
+  --shadow-sm:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md:      0 4px 12px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.06);
+  --shadow-lg:      0 10px 30px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+  --transition:     all .22s cubic-bezier(.4,0,.2,1);
+}
+
+/* --- RESET Y BASE --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* Custom scrollbar for webkit */
-::-webkit-scrollbar {
-  width: 8px;
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--slate-50);
+  color: var(--slate-800);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
+/* --- SCROLLBAR PERSONALIZADA --- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: var(--ugt-red); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--ugt-red-dark); }
 
-::-webkit-scrollbar-thumb {
-  background: #C8102E; /* UGT Official Red */
-  border-radius: 4px;
-}
+/* --- SELECCIÓN DE TEXTO --- */
+::selection { background: #fecdd3; color: var(--ugt-red-dark); }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #9b0c23;
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-
-/* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,16,46,.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(200,16,46,0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
 
-.animate-in {
-  animation: fadeIn 0.5s ease-out forwards;
+.animate-in   { animation: fadeInUp .45s ease-out both; }
+.animate-fade { animation: fadeIn .3s ease-out both; }
+
+/* Delay helper classes */
+.delay-1 { animation-delay: .05s; }
+.delay-2 { animation-delay: .10s; }
+.delay-3 { animation-delay: .15s; }
+.delay-4 { animation-delay: .20s; }
+
+/* ============================================
+   HEADER UGT
+   ============================================ */
+.ugt-header {
+  background: linear-gradient(135deg, #b00d27 0%, var(--ugt-red) 40%, #d41535 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(200,16,46,.35);
+}
+.ugt-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ============================================
+   NAVEGACIÓN
+   ============================================ */
+.ugt-nav {
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.ugt-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: 1rem .75rem;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #64748b;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: var(--transition);
+  white-space: nowrap;
+  height: 100%;
+}
+.ugt-nav-link:hover {
+  background: #fef2f4;
+  color: var(--ugt-red);
+  border-bottom-color: #fca5a5;
+}
+.ugt-nav-link.active {
+  color: var(--ugt-red);
+  border-bottom-color: var(--ugt-red);
+  background: #fff5f7;
+}
+
+/* ============================================
+   TARJETAS Y CONTENEDORES
+   ============================================ */
+.card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #f1f5f9;
+  transition: var(--transition);
+}
+.card:hover { box-shadow: var(--shadow-md); }
+
+.card-ugt {
+  border-left: 4px solid var(--ugt-red);
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--ugt-red);
+  border-bottom: 3px solid var(--ugt-red);
+  padding-bottom: .5rem;
+  margin-bottom: 1.5rem;
+  letter-spacing: -.02em;
+}
+
+/* ============================================
+   BADGES DE ESTADO DE BOLSAS
+   ============================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .25rem .75rem;
+  border-radius: 99px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.badge-abierta      { background: #dcfce7; color: #15803d; }
+.badge-cerrada      { background: #f1f5f9; color: #64748b; }
+.badge-documentacion{ background: #dbeafe; color: #1d4ed8; }
+.badge-reclamacion  { background: #fef9c3; color: #a16207; }
+.badge-definitiva   { background: #ede9fe; color: #6d28d9; }
+
+/* Indicador pulsante para "abierta" */
+.badge-abierta::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+  animation: pulse-red 1.5s infinite;
+  /* reuse animation, color override */
+  animation-name: pulse-green;
+}
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(22,163,74,.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(22,163,74,0); }
+}
+
+/* ============================================
+   INPUTS Y FORMULARIOS
+   ============================================ */
+.input-ugt {
+  border: 2px solid #e2e8f0;
+  border-radius: .5rem;
+  padding: .6rem 1rem;
+  width: 100%;
+  font-family: inherit;
+  font-size: .875rem;
+  color: var(--slate-800);
+  background: #fff;
+  transition: var(--transition);
+  outline: none;
+}
+.input-ugt:focus {
+  border-color: var(--ugt-red);
+  box-shadow: 0 0 0 3px rgba(200,16,46,.12);
+}
+.input-ugt::placeholder { color: #94a3b8; }
+
+/* ============================================
+   BOTONES
+   ============================================ */
+.btn-primary {
+  background: linear-gradient(135deg, var(--ugt-red), #e8102e);
+  color: #fff;
+  border: none;
+  border-radius: .6rem;
+  padding: .75rem 1.5rem;
+  font-family: inherit;
+  font-size: .875rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(200,16,46,.3);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--ugt-red-dark), var(--ugt-red));
+  box-shadow: 0 4px 16px rgba(200,16,46,.4);
+  transform: translateY(-1px);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  border-radius: .6rem;
+  padding: .75rem 1.25rem;
+  font-family: inherit;
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  transition: var(--transition);
+}
+.btn-secondary:hover { background: #e2e8f0; }
+
+/* ============================================
+   TABLAS
+   ============================================ */
+.table-ugt { width: 100%; border-collapse: collapse; font-size: .875rem; }
+.table-ugt thead { background: var(--ugt-red); color: #fff; }
+.table-ugt th { padding: .75rem 1rem; text-align: left; font-weight: 600; }
+.table-ugt td { padding: .75rem 1rem; border-bottom: 1px solid #f1f5f9; }
+.table-ugt tbody tr:hover { background: #fef2f4; }
+.table-ugt .val { font-weight: 700; color: var(--ugt-red); text-align: right; }
+
+/* ============================================
+   BUSCADOR STICKY
+   ============================================ */
+.search-sticky {
+  position: sticky;
+  top: 60px;
+  z-index: 40;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: .875rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-icon {
+  position: absolute;
+  left: .875rem;
+  color: #94a3b8;
+  pointer-events: none;
+  width: 1.1rem; height: 1.1rem;
+}
+.search-input {
+  width: 100%;
+  padding: .6rem 1rem .6rem 2.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: .5rem;
+  font-family: inherit;
+  font-size: .875rem;
+  outline: none;
+  transition: var(--transition);
+}
+.search-input:focus {
+  border-color: var(--ugt-red);
+  box-shadow: 0 0 0 3px rgba(200,16,46,.1);
+}
+
+/* ============================================
+   ALERTAS / DISCLAIMERS
+   ============================================ */
+.alert-warning {
+  background: #fffbeb;
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 .6rem .6rem 0;
+  padding: 1rem 1.25rem;
+  display: flex;
+  gap: .75rem;
+  align-items: flex-start;
+}
+.alert-info {
+  background: #eff6ff;
+  border-left: 4px solid #3b82f6;
+  border-radius: 0 .6rem .6rem 0;
+  padding: 1rem 1.25rem;
+  display: flex;
+  gap: .75rem;
+  align-items: flex-start;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.ugt-footer {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  color: #94a3b8;
+  margin-top: 4rem;
+  padding: 3rem 1.5rem 2rem;
+}
+.ugt-footer h3 { color: #fff; font-weight: 700; margin-bottom: .5rem; }
+.ugt-footer h4 { color: var(--ugt-red); font-weight: 600; margin-bottom: 1rem; font-size: .9rem; text-transform: uppercase; letter-spacing: .05em; }
+.ugt-footer a { color: #94a3b8; text-decoration: none; transition: color .2s; }
+.ugt-footer a:hover { color: #fff; }
+
+/* ============================================
+   SCROLL-TO-TOP
+   ============================================ */
+.scroll-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 2.75rem; height: 2.75rem;
+  border-radius: 50%;
+  background: var(--ugt-red);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(200,16,46,.4);
+  transition: var(--transition);
+  z-index: 99;
+}
+.scroll-top:hover { background: var(--ugt-red-dark); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(200,16,46,.4); }
+
+/* ============================================
+   HISTORIAL DE CORTES
+   ============================================ */
+.corte-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: #f8fafc;
+  border-radius: .4rem;
+  padding: .5rem .75rem;
+  font-size: .78rem;
+}
+.corte-row + .corte-row { margin-top: .35rem; }
+
+/* ============================================
+   LEYENDA DE ESTADOS
+   ============================================ */
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: .75rem;
+  margin-top: 1rem;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: .8rem;
+  color: #475569;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .ugt-nav-link { font-size: .65rem; padding: .85rem .4rem; gap: .3rem; }
+  .section-title { font-size: 1.4rem; }
+}
+
+@media print {
+  .ugt-nav, .scroll-top, .print-hidden { display: none !important; }
+  body { background: #fff; }
 }

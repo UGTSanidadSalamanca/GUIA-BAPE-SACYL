@@ -40,18 +40,20 @@ const RenderIcon = ({ icon, className }) => {
 
 const Header = () => {
   return (
-    <header className="bg-[#C8102E] text-white py-8 px-4 shadow-lg border-b-4 border-red-900">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <header className="ugt-header text-white py-8 px-4">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4" style={{position:'relative',zIndex:1}}>
         <div className="text-center md:text-left">
           <div className="flex items-center justify-center md:justify-start gap-3 mb-1">
-            <RenderIcon icon={Building2} className="w-8 h-8 text-white" />
-            <h1 className="text-2xl font-bold tracking-tight">UGT Sanidad Salamanca</h1>
+            <RenderIcon icon={Building2} className="w-9 h-9 text-white" />
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight" style={{lineHeight:1.2}}>UGT Sanidad Salamanca</h1>
+              <p style={{color:'rgba(255,255,255,.75)',fontSize:'.8rem',fontWeight:500}}>Secretaría Sindical · Castilla y León</p>
+            </div>
           </div>
-          <p className="text-red-100 text-sm font-medium opacity-90">Secretaría Sindical</p>
         </div>
         <div className="text-center md:text-right">
           <h2 className="text-xl md:text-2xl font-semibold mb-1">Guía Rápida BAPE SACYL</h2>
-          <p className="text-red-100 text-sm opacity-90">Bolsa Abierta y Permanente</p>
+          <p style={{color:'rgba(255,255,255,.8)',fontSize:'.85rem'}}>Bolsa Abierta y Permanente de Empleo</p>
         </div>
       </div>
     </header>
@@ -60,27 +62,22 @@ const Header = () => {
 
 const Navigation = () => {
   const navItems = [
-    { to: '/acceso', label: 'Acceso BAPE', icon: LogIn },
-    { to: '/puntuacion', label: 'Puntuación', icon: Calculator },
-    { to: '/llamamientos', label: 'Llamamientos', icon: PhoneIncoming },
-    { to: '/penalizaciones', label: 'Penalizaciones', icon: AlertTriangle },
-    { to: '/estado-bolsas', label: 'Estado de Bolsas', icon: List },
+    { to: '/acceso',        label: 'Acceso BAPE',      icon: LogIn },
+    { to: '/puntuacion',    label: 'Puntuación',        icon: Calculator },
+    { to: '/llamamientos',  label: 'Llamamientos',      icon: PhoneIncoming },
+    { to: '/penalizaciones',label: 'Penalizaciones',    icon: AlertTriangle },
+    { to: '/estado-bolsas', label: 'Estado de Bolsas',  icon: List },
   ];
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <ul className="max-w-6xl mx-auto flex flex-col md:flex-row list-none p-0 m-0">
+    <nav className="ugt-nav">
+      <ul className="max-w-6xl mx-auto list-none p-0 m-0"
+          style={{display:'flex',overflowX:'auto',WebkitOverflowScrolling:'touch',scrollbarWidth:'none'}}>
         {navItems.map((item) => (
-          <li key={item.to} className="flex-1">
+          <li key={item.to} style={{flex:'1 0 auto',minWidth:'fit-content'}}>
             <NavLink
               to={item.to}
-              className={({ isActive }) =>
-                `flex items-center justify-center gap-2 py-4 px-2 text-sm font-bold uppercase transition-all duration-300 border-b-4 h-full
-                ${isActive
-                  ? 'text-red-700 border-red-600 bg-red-50'
-                  : 'text-slate-600 border-transparent hover:bg-slate-50 hover:text-red-600'
-                }`
-              }
+              className={({ isActive }) => 'ugt-nav-link' + (isActive ? ' active' : '')}
             >
               <RenderIcon icon={item.icon} className="w-4 h-4" />
               <span>{item.label}</span>
@@ -111,7 +108,7 @@ const Disclaimer = () => (
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-800 text-slate-300 mt-12 py-12 px-4 print:hidden">
+    <footer className="ugt-footer print-hidden">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div>
           <h3 className="text-white text-lg font-bold mb-2">UGT Sanidad Salamanca</h3>
