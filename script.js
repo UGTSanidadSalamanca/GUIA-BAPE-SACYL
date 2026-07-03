@@ -754,14 +754,14 @@ const BolsasStatusView = () => {
     {
       id: 4,
       categoria: 'TÉCNICO EN CUIDADOS AUXILIARES DE ENFERMERÍA (TCAE)',
-      estado: 'reclamacion',
+      estado: 'Lista Definitiva',
       ultimoCorte: '2023',
       fechaCorte: '12/11/2025',
       pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/tecnico-cuidados-auxiliares-enfermeria',
-      descripcion: 'Publicada relación provisional del Corte 2023. Urgencia por finalizar tras demora administrativa.',
+      descripcion: '22/06/2026: Publicada Resolución por la que se publica la relación definitiva de las personas candidatas de la bolsa de empleo y entrada en vigor.',
       cortes: [
         { año: '2023', fecha: '12/11/2025', estado: 'Relación provisional publicada' },
-        { año: '2020', fecha: '15/11/2022', estado: 'Relación definitiva vigente' }
+        { año: '2026', fecha: '23/06/2026', estado: 'Relación definitiva vigente' }
       ]
     },
     {
