@@ -728,12 +728,13 @@ const BolsasStatusView = () => {
     {
       id: 2,
       categoria: 'AUXILIAR ADMINISTRATIVO',
-      estado: 'reclamacion',
+      estado: 'definitiva',
       ultimoCorte: '2024',
-      fechaCorte: '27/02/2026',
+      fechaCorte: '02/07/2026',
       pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/auxiliar-administrativo',
-      descripcion: 'Publicadas listas provisionales del Corte 2024 el 27/02/2026. Periodo de alegaciones activo. Gestionado por G.S.A. Salamanca.',
+      descripcion: '02/07/2026: Publicada Resolución por la que se publica la relación definitiva de personas candidatas de la bolsa de empleo y entrada en vigor.',
       cortes: [
+        { año: '2024', fecha: '02/07/2026', estado: '✅ Relación definitiva publicada' },
         { año: '2024', fecha: '27/02/2026', estado: 'Listas provisionales publicadas' },
         { año: '2024', fecha: '26/11/2024', estado: 'Documentación presentada' },
         { año: '2021', fecha: '27/08/2024', estado: 'Relación definitiva vigente' }
