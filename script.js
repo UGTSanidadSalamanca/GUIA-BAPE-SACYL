@@ -708,7 +708,7 @@ const BolsasStatusView = () => {
   // ========================================
   // DATOS DE ESTADO DE BOLSAS - EDITAR AQUÍ
   // ========================================
-  // Última actualización: 20/12/2024 14:40
+  // Última actualización: 24/06/2026 18:25
   // Datos extraídos de la web oficial de SACYL
 
   const bolsasData = [
@@ -721,20 +721,21 @@ const BolsasStatusView = () => {
       pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/enfermero',
       descripcion: 'Publicada Resolución abriendo plazo para entrega de documentación (del 21 de febrero al 6 de marzo de 2025). Gestionado por Valladolid.',
       cortes: [
-        { año: '2024', fecha: '20/02/2025', estado: 'Validación de méritos post-entrega' },
+        { año: '2024', fecha: '20/02/2025', estado: 'Fase de documentación' },
         { año: '2022', fecha: '19/06/2024', estado: 'Relación definitiva publicada' }
       ]
     },
     {
       id: 2,
       categoria: 'AUXILIAR ADMINISTRATIVO',
-      estado: 'documentacion',
+      estado: 'reclamacion',
       ultimoCorte: '2024',
-      fechaCorte: '26/11/2024',
+      fechaCorte: '27/02/2026',
       pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/auxiliar-administrativo',
-      descripcion: 'Corte 2024 en fase de validación tras finalizar entrega de documentación. Gestionado por G.S.A. Salamanca.',
+      descripcion: 'Publicadas listas provisionales del Corte 2024 el 27/02/2026. Periodo de alegaciones activo. Gestionado por G.S.A. Salamanca.',
       cortes: [
-        { año: '2024', fecha: '26/11/2024', estado: 'Presentación documentación finalizada' },
+        { año: '2024', fecha: '27/02/2026', estado: 'Listas provisionales publicadas' },
+        { año: '2024', fecha: '26/11/2024', estado: 'Documentación presentada' },
         { año: '2021', fecha: '27/08/2024', estado: 'Relación definitiva vigente' }
       ]
     },
@@ -745,7 +746,7 @@ const BolsasStatusView = () => {
       ultimoCorte: '2025',
       fechaCorte: '28/04/2025',
       pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/celador',
-      descripcion: 'Publicada resolución para presentación de documentos del nuevo corte. Proceso de estabilización en curso.',
+      descripcion: 'Publicada resolución para presentación de documentos del Corte 2025 (28/04/2025).',
       cortes: [
         { año: '2025', fecha: '28/04/2025', estado: 'En fase de documentación' },
         { año: '2021', fecha: '04/09/2024', estado: 'Relación definitiva previa' }
@@ -754,26 +755,28 @@ const BolsasStatusView = () => {
     {
       id: 4,
       categoria: 'TÉCNICO EN CUIDADOS AUXILIARES DE ENFERMERÍA (TCAE)',
-      estado: 'Lista Definitiva',
+      estado: 'definitiva',
       ultimoCorte: '2023',
-      fechaCorte: '12/11/2025',
+      fechaCorte: '22/06/2026',
       pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/tecnico-cuidados-auxiliares-enfermeria',
-      descripcion: '22/06/2026: Publicada Resolución por la que se publica la relación definitiva de las personas candidatas de la bolsa de empleo y entrada en vigor.',
+      descripcion: '🆕 Relación DEFINITIVA publicada el 22/06/2026 (Corte 2023). Bolsa operativa.',
       cortes: [
-        { año: '2023', fecha: '12/11/2025', estado: 'Relación provisional publicada' },
-        { año: '2026', fecha: '23/06/2026', estado: 'Relación definitiva vigente' }
+        { año: '2023', fecha: '22/06/2026', estado: '✅ Relación definitiva publicada' },
+        { año: '2023', fecha: '12/11/2025', estado: 'Relación provisional' },
+        { año: '2020', fecha: '15/11/2022', estado: 'Relación definitiva anterior' }
       ]
     },
     {
       id: 5,
       categoria: 'T.S. LABORATORIO DE DIAGNÓSTICO CLÍNICO',
-      estado: 'reclamacion',
+      estado: 'definitiva',
       ultimoCorte: '2024',
-      fechaCorte: '24/11/2025',
+      fechaCorte: '24/06/2026',
       pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/tecnico-superior-laboratorio-diagnostico-clinico',
-      descripcion: 'Publicada relación provisional del Corte 2024. Periodo de alegaciones hasta el 9 de diciembre. Gestiona León.',
+      descripcion: '🆕 Relación DEFINITIVA publicada HOY (24/06/2026), Corte 2024. Gestiona León.',
       cortes: [
-        { año: '2024', fecha: '24/11/2025', estado: 'Relación provisional (en alegaciones)' }
+        { año: '2024', fecha: '24/06/2026', estado: '✅ Relación definitiva publicada HOY' },
+        { año: '2024', fecha: '24/11/2025', estado: 'Relación provisional (alegaciones)' }
       ]
     },
     {
@@ -783,7 +786,7 @@ const BolsasStatusView = () => {
       ultimoCorte: '2025',
       fechaCorte: '18/12/2025',
       pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/enfermero-especialista-matrona',
-      descripcion: 'Relación definitiva publicada con celeridad para cobertura de paritorios 2026. Vigente desde 19/12.',
+      descripcion: 'Relación definitiva publicada el 18/12/2025. Vigente para cobertura 2026.',
       cortes: [
         { año: '2025', fecha: '18/12/2025', estado: 'Relación definitiva vigente' }
       ]
@@ -795,7 +798,7 @@ const BolsasStatusView = () => {
       ultimoCorte: '2024',
       fechaCorte: '08/10/2025',
       pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/enfermero-especialista-familiar-comunitaria',
-      descripcion: 'Relación definitiva publicada. Entrada en vigor el 9 de octubre de 2025.',
+      descripcion: 'Relación definitiva publicada el 08/10/2025.',
       cortes: [
         { año: '2024', fecha: '08/10/2025', estado: 'Relación definitiva publicada' }
       ]
@@ -806,7 +809,7 @@ const BolsasStatusView = () => {
       estado: 'definitiva',
       ultimoCorte: '2024',
       fechaCorte: '29/10/2025',
-      descripcion: 'Culminado proceso del Corte 2024. Disponibilidad de mandos intermedios para 2026.',
+      descripcion: 'Relación definitiva del Corte 2024 publicada el 29/10/2025.',
       cortes: [
         { año: '2024', fecha: '29/10/2025', estado: 'Relación definitiva publicada' }
       ]
@@ -814,21 +817,21 @@ const BolsasStatusView = () => {
     {
       id: 9,
       categoria: 'ADMINISTRATIVO (C1)',
-      estado: 'reclamacion',
+      estado: 'definitiva',
       ultimoCorte: '2025',
       fechaCorte: '21/10/2025',
-      descripcion: 'Publicadas listas provisionales de admitidos y excluidos. Convocatoria de plazas fijas en estudio.',
+      descripcion: 'Proceso del Corte 2025 concluido. Relación definitiva publicada y operativa.',
       cortes: [
-        { año: '2025', fecha: '21/10/2025', estado: 'Listas provisionales publicadas' }
+        { año: '2025', fecha: '21/10/2025', estado: 'Relación definitiva publicada' }
       ]
     },
     {
       id: 10,
-      categoria: 'ENFERMERO/A SALUD MENTAL / TRABAJO / GERIÁTRICA / PEDIÁTRICA',
+      categoria: 'ENFERMERO/A ESPECIALISTA (SALUD MENTAL / TRABAJO / GERIÁTRICA / PEDIÁTRICA)',
       estado: 'definitiva',
       ultimoCorte: '2024',
       fechaCorte: '24/04/2025',
-      descripcion: 'Sincronización de resoluciones definitivas para todas estas especialidades de enfermería.',
+      descripcion: 'Resoluciones definitivas para todas las especialidades de enfermería publicadas el 24/04/2025.',
       cortes: [
         { año: '2024', fecha: '24/04/2025', estado: 'Relación definitiva publicada' }
       ]
@@ -850,7 +853,7 @@ const BolsasStatusView = () => {
       estado: 'definitiva',
       ultimoCorte: '2024',
       fechaCorte: '20/02/2025',
-      descripcion: 'Publicadas relaciones definitivas en febrero de 2025.',
+      descripcion: 'Relaciones definitivas publicadas en febrero de 2025.',
       cortes: [
         { año: '2024', fecha: '20/02/2025', estado: 'Relación definitiva publicada' }
       ]
@@ -861,7 +864,7 @@ const BolsasStatusView = () => {
       estado: 'definitiva',
       ultimoCorte: '2025',
       fechaCorte: '04/03/2025',
-      descripcion: 'Resolución definitiva tras validación de méritos específicos.',
+      descripcion: 'Resolución definitiva publicada el 04/03/2025.',
       cortes: [
         { año: '2025', fecha: '04/03/2025', estado: 'Relación definitiva publicada' }
       ]
@@ -872,7 +875,7 @@ const BolsasStatusView = () => {
       estado: 'definitiva',
       ultimoCorte: '2025',
       fechaCorte: '02/12/2025',
-      descripcion: 'Resolución reciente para gestión eficiente de servicios de rehabilitación hospitalaria.',
+      descripcion: 'Resolución definitiva para gestión de rehabilitación hospitalaria.',
       cortes: [
         { año: '2025', fecha: '02/12/2025', estado: 'Relación definitiva publicada' }
       ]
@@ -883,20 +886,22 @@ const BolsasStatusView = () => {
       estado: 'definitiva',
       ultimoCorte: '2025',
       fechaCorte: '02/12/2025',
-      descripcion: 'Refuerzo de la estructura de gestión técnica de la Consejería y Gerencias.',
+      descripcion: 'Relación definitiva publicada el 02/12/2025.',
       cortes: [
         { año: '2025', fecha: '02/12/2025', estado: 'Relación definitiva publicada' }
       ]
     },
     {
       id: 16,
-      categoria: 'L.E. MEDICINA FAMILIAR Y COMUNITARIA (BAPE)',
-      estado: 'documentacion',
+      categoria: 'L.E. MEDICINA FAMILIAR Y COMUNITARIA',
+      estado: 'reclamacion',
       ultimoCorte: '2025',
-      fechaCorte: '28/04/2025',
-      descripcion: 'Categoría prioritaria para planificación de centros rurales. En fase de entrega de documentos.',
+      fechaCorte: '27/05/2026',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas',
+      descripcion: 'Publicadas listas provisionales del Corte 2025 el 27/05/2026. En periodo de alegaciones.',
       cortes: [
-        { año: '2025', fecha: '28/04/2025', estado: 'En fase de documentación' }
+        { año: '2025', fecha: '27/05/2026', estado: 'Listas provisionales publicadas' },
+        { año: '2025', fecha: '28/04/2025', estado: 'Fase de documentación' }
       ]
     },
     {
@@ -916,7 +921,7 @@ const BolsasStatusView = () => {
       estado: 'definitiva',
       ultimoCorte: '2025',
       fechaCorte: '08/10/2025',
-      descripcion: 'Actualización de listados para gestión de flujos asistenciales.',
+      descripcion: 'Relación definitiva publicada el 08/10/2025.',
       cortes: [
         { año: '2025', fecha: '08/10/2025', estado: 'Relación definitiva publicada' }
       ]
@@ -924,12 +929,12 @@ const BolsasStatusView = () => {
     {
       id: 19,
       categoria: 'T.E. PREVENCIÓN DE RIESGOS LABORALES',
-      estado: 'definitiva',
-      ultimoCorte: '2022',
-      fechaCorte: '30/05/2022',
-      descripcion: 'Última definitiva 2022. Nueva fecha de corte para actualizaciones fijada el 10/07/2023.',
+      estado: 'abierta',
+      ultimoCorte: '2023',
+      fechaCorte: '10/07/2023',
+      descripcion: 'Fecha de corte fijada por resolución el 10/07/2023. Bolsa abierta para nuevas inscripciones y actualización de méritos.',
       cortes: [
-        { año: '2022', fecha: '30/05/2022', estado: 'Relación definitiva vigente' }
+        { año: '2023', fecha: '10/07/2023', estado: 'Fecha de corte fijada' }
       ]
     },
     {
@@ -942,9 +947,65 @@ const BolsasStatusView = () => {
       cortes: [
         { año: '2024', fecha: '26/11/2024', estado: 'Relación definitiva publicada' }
       ]
+    },
+    {
+      id: 21,
+      categoria: 'FISIOTERAPEUTA',
+      estado: 'definitiva',
+      ultimoCorte: '2025',
+      fechaCorte: '11/06/2025',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas/fisioterapeuta',
+      descripcion: '🆕 Nueva categoría añadida. Relación definitiva publicada el 11/06/2025.',
+      cortes: [
+        { año: '2025', fecha: '11/06/2025', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 22,
+      categoria: 'T.S. ANATOMÍA PATOLÓGICA Y CITOLOGÍA',
+      estado: 'definitiva',
+      ultimoCorte: '2024',
+      fechaCorte: '02/10/2024',
+      descripcion: '🆕 Nueva categoría añadida. Relación definitiva publicada el 02/10/2024.',
+      cortes: [
+        { año: '2024', fecha: '02/10/2024', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 23,
+      categoria: 'T.S. RADIOTERAPIA',
+      estado: 'definitiva',
+      ultimoCorte: '2024',
+      fechaCorte: '02/10/2024',
+      descripcion: '🆕 Nueva categoría añadida. Relación definitiva publicada el 02/10/2024.',
+      cortes: [
+        { año: '2024', fecha: '02/10/2024', estado: 'Relación definitiva publicada' }
+      ]
+    },
+    {
+      id: 24,
+      categoria: 'LICENCIADOS ESPECIALISTAS + MÉDICO URGENCIAS HOSPITALARIAS',
+      estado: 'documentacion',
+      ultimoCorte: '2025',
+      fechaCorte: '14/01/2026',
+      pdfUrl: 'https://www.saludcastillayleon.es/profesionales/es/procesos_selectivos/nuevo-procedimiento-bolsas-empleo/convocatorias-abiertas',
+      descripcion: '🆕 Nueva categoría. Resolución de apertura del plazo para documentación del Corte 2025 (14/01/2026). Incluye todas las especialidades médicas y médicos de urgencias hospitalarias.',
+      cortes: [
+        { año: '2025', fecha: '14/01/2026', estado: 'En fase de documentación' }
+      ]
+    },
+    {
+      id: 25,
+      categoria: 'TITULADO MEDIO DE PREVENCIÓN DE RIESGOS LABORALES',
+      estado: 'abierta',
+      ultimoCorte: '2023',
+      fechaCorte: '10/07/2023',
+      descripcion: '🆕 Nueva categoría. Fecha de corte fijada el 10/07/2023. Bolsa abierta.',
+      cortes: [
+        { año: '2023', fecha: '10/07/2023', estado: 'Fecha de corte fijada' }
+      ]
     }
   ];
-
   // Filtramos las categorías por el buscador
   const filteredBolsas = bolsasData.filter(bolsa =>
     bolsa.categoria.toLowerCase().includes(searchTerm.toLowerCase())
